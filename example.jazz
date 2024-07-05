@@ -1,3 +1,4 @@
-export
-fn (u64 abobus) -> u64 {
-return 1; }
+export fn name(u64 abobus) -> u64 {
+  a = a;
+  return abobus;
+}

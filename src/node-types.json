@@ -8,6 +8,10 @@
       "required": false,
       "types": [
         {
+          "type": "instruction",
+          "named": true
+        },
+        {
           "type": "return_statement",
           "named": true
         }
@@ -24,6 +28,16 @@
         "types": [
           {
             "type": "block",
+            "named": true
+          }
+        ]
+      },
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
             "named": true
           }
         ]
@@ -81,6 +95,25 @@
     "fields": {}
   },
   {
+    "type": "instruction",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "number",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "parameter_list",
     "named": true,
     "fields": {},
@@ -125,6 +158,10 @@
         {
           "type": "function_definition",
           "named": true
+        },
+        {
+          "type": "instruction",
+          "named": true
         }
       ]
     }
@@ -147,6 +184,10 @@
   },
   {
     "type": ";",
+    "named": false
+  },
+  {
+    "type": "=",
     "named": false
   },
   {

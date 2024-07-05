@@ -2,6 +2,10 @@
 // @ts-check
 //
 
+const hexDigit = /[0-9a-fA-F]/;
+const decimalDigit = /[0-9]/;
+const terminator = ';';
+
 module.exports = grammar({
   name: 'jasmin',
 
@@ -12,7 +16,10 @@ module.exports = grammar({
 
   rules: {
 
-    source_file: $ => repeat($.function_definition),
+    source_file: $ => repeat(choice(
+      $.instruction,
+      $.function_definition,
+    )),
 
     _definition: $ => choice(
       $.function_definition
@@ -22,6 +29,7 @@ module.exports = grammar({
     function_definition: $ => prec.right(1, seq(
       field('visibility', optional($.function_visibility)),
       'fn',
+      field('name', $.identifier),
       field('type_parameters', $.parameter_list),
       optional(seq(
         '->',
@@ -35,7 +43,7 @@ module.exports = grammar({
     parameter_list: $ => seq(
       '(',
       optional(commaSep($.function_parameter)),
-      ')'
+    ')'
     ),
 
     function_parameter: $ => seq(
@@ -53,15 +61,34 @@ module.exports = grammar({
       '}'
     ),
 
-    _statement: $ => choice(
-      $.return_statement
-      // TODO: other kinds of statements
+    _lvalue: $ => seq(
+      $.identifier,
+    ),
+
+    _assignment: $ => seq(
+      $._lvalue,
+      '=',
+      $._expression,
+
+    ),
+
+    instruction: $ => choice(
+      $._assignment,
+
+    ),
+
+    _statement: $ => seq(
+      choice(
+        $.return_statement,
+        $.instruction,
+        // TODO: other kinds of statements
+      ),
+      terminator,
     ),
 
     return_statement: $ => seq(
       'return',
       $._expression,
-      ';'
     ),
 
     _expression: $ => choice(
