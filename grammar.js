@@ -26,39 +26,151 @@ module.exports = grammar({
       // TODO: other kinds of definitions
     ),
 
-    function_definition: $ => prec.right(1, seq(
-      field('visibility', optional($.function_visibility)),
+    function_definition: $ => seq(
+      field('visibility', optional($.call_conv)),
       'fn',
       field('name', $.identifier),
-      field('type_parameters', $.parameter_list),
+      field('type_parameters', $.annot_pvardecl_list),
       optional(seq(
         '->',
-        field('result', $._type),
+        field('result', $._annot_stor_type),
       )),
       field('body', optional($.block)),
-    )),
+    ),
 
-    function_visibility: $ => choice('inline', 'export'),
+    call_conv: $ => choice('inline', 'export'),
 
-    parameter_list: $ => seq(
+    _pvardecl: $ => seq(
+      $._stor_type,
+      $._var,
+    ),
+
+    annot_pvardecl_list: $ => seq(
       '(',
-      optional(commaSep($.function_parameter)),
-    ')'
+      optional(commaSep($.annot_pvardecl)),
+      ')'
     ),
 
-    function_parameter: $ => seq(
-      $._type,
-      $.identifier,
+    annot_pvardecl: $ => seq(
+      repeat($._top_annotation),
+      $._pvardecl,
     ),
 
-    _type: $ => choice(
-      'u64'
+    _writable: $ => choice(
+      'const',
+      'mut',
+    ),
+
+    _pointer: $ => seq(
+      optional($._writable),
+      'ptr',
+    ),
+
+    _ptr: $ => $._pointer,
+
+    _storage: $ => choice(
+      seq('reg', optional($._ptr)),
+      seq('stack', optional($._ptr)),
+      'inline',
+      'global',
+    ),
+
+    _top_annotation: $ => '#',
+
+    // _annotations: $ => repeat(
+    //   $._top_annotation,
+    // ),
+
+    _keyword: $ => choice(
+      'inline',
+      'export',
+      'reg',
+      'stack',
+    ),
+
+    _utype: $ => choice(
+      'u8',
+      'u16',
+      'u32',
+      'u64',
+      'u128',
+      'u256',
+    ),
+
+    _ptype: $ => choice(
+      'bool',
+      'int',
+      $._utype,
+      // | utype brackets(<pexpr)>
+    ),
+
+    _stor_type: $ => seq(
+      $._storage,
+      $._ptype,
+    ),
+
+    _annot_stor_type: $ => seq(
+      repeat($._top_annotation),
+      $._stor_type,
     ),
 
     block: $ => seq(
       '{',
       repeat($._statement),
       '}'
+    ),
+
+
+    intLiteral: $ => choice(
+      hexDigit,
+      decimalDigit,
+    ),
+
+    _int: $ => choice(
+      $.intLiteral,
+      seq('-', $.intLiteral),
+    ),
+
+    _pexpr: $ => choice(
+      $._var,
+      seq(
+        $._var,
+        $._arr_access_len,
+      ),
+      'true',
+      'false',
+      $._int,
+
+    ),
+
+    _var: $ => $.identifier,
+
+    _aligned: $ => choice(
+      'aligned',
+      'unaligned',
+    ),
+
+    _arr_access_len: $ => seq(
+      ':',
+      $._pexpr,
+    ),
+
+    _arr_access_i: $ => seq(
+      optional($._aligned),
+      optional($._utype),
+      $._pexpr,
+      optional($._arr_access_len),
+    ),
+
+    _plvalue_r: $ => choice(
+      '_',
+      $._var,
+      seq(
+        optional('.'),
+        '[',
+        $._arr_access_i,
+        ']',
+      ),
     ),
 
     _lvalue: $ => seq(
@@ -97,7 +209,7 @@ module.exports = grammar({
       // TODO: other kinds of expressions
     ),
 
-    identifier: $ => /[a-z]+/,
+    identifier: $ => /[_a-zA-Z][_a-zA-Z0-9]{0,30}/,
 
     number: $ => /\d+/,
 

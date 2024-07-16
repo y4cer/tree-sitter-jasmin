@@ -1,0 +1,261 @@
+<qident> ::= NID (COLONCOLON NID)*
+
+<ident> ::= <loc(<qident>)>
+
+<var> ::= <ident>
+
+<keyword> ::= INLINE
+            | EXPORT
+            | REG
+            | STACK
+
+<annotationlabel> ::= <ident>
+                    | <loc(<keyword>)>
+                    | <loc(STRING)>
+
+<int> ::= INT
+        | MINUS INT
+
+<simple_attribute> ::= <int>
+                     | NID
+                     | STRING
+                     | <keyword>
+                     | <utype>
+
+<attribute> ::= EQ <loc(<simple_attribute>)>
+              | EQ <loc(<braces(<struct_annot>)>)>
+
+<annotation> ::= <annotationlabel> [<attribute>]
+
+<struct_annot> ::= [<annotation> (COMMA <annotation>)*]
+
+<top_annotation> ::= SHARP <annotation>
+                   | SHARP LBRACKET <struct_annot> RBRACKET
+
+<annotations> ::= <top_annotation>*
+
+<utype> ::= T_U8
+          | T_U16
+          | T_U32
+          | T_U64
+          | T_U128
+          | T_U256
+
+<ptype_r> ::= T_BOOL
+            | T_INT
+            | <utype>
+            | <utype> <brackets(<pexpr>)>
+
+<ptype> ::= <loc(<ptype_r>)>
+
+<swsize> ::= SWSIZE
+
+<svsize> ::= SVSIZE
+
+<castop1> ::= <swsize>
+            | <svsize>
+
+<castop> ::= [<loc(<castop1>)>]
+
+<cast> ::= T_INT
+         | <swsize>
+
+<peop1> ::= BANG <castop>
+          | MINUS <castop>
+
+<peop2> ::= AMPAMP
+          | PIPEPIPE
+          | PLUS <castop>
+          | MINUS <castop>
+          | STAR <castop>
+          | SLASH <castop>
+          | PERCENT <castop>
+          | AMP <castop>
+          | PIPE <castop>
+          | HAT <castop>
+          | LTLT <castop>
+          | <loc(GTGT)> <castop>
+          | ROR <castop>
+          | ROL <castop>
+          | EQEQ <castop>
+          | BANGEQ <castop>
+          | <loc(LT)> <castop>
+          | <loc(LE)> <castop>
+          | <loc(GT)> <castop>
+          | <loc(GE)> <castop>
+
+<prim> ::= SHARP <ident>
+
+<mem_ofs> ::= PLUS <pexpr>
+            | MINUS <pexpr>
+
+<unaligned> ::= ALIGNED
+              | UNALIGNED
+
+<mem_access> ::= [<parens(<utype>)>] LBRACKET [<unaligned>] <var> [<mem_ofs>]
+                 RBRACKET
+
+<arr_access_len> ::= COLON <pexpr>
+
+<arr_access_i> ::= [<unaligned>] [<utype>] <pexpr> [<arr_access_len>]
+
+<arr_access> ::= [DOT] <brackets(<arr_access_i>)>
+
+<pexpr_r> ::= <var>
+            | <var> <arr_access>
+            | TRUE
+            | FALSE
+            | INT
+            | <mem_access>
+            | <parens(<svsize>)> LBRACKET <rtuple1(<pexpr>)> RBRACKET
+            | <parens(<cast>)> <pexpr>
+            | <peop1> <pexpr>
+            | <pexpr> <peop2> <pexpr>
+            | <parens(<pexpr>)>
+            | <var> <parens_tuple(<pexpr>)>
+            | <prim> <parens_tuple(<pexpr>)>
+            | <pexpr> QUESTIONMARK <pexpr> COLON <pexpr>
+
+<pexpr> ::= <loc(<pexpr_r>)>
+
+<peqop> ::= EQ
+          | PLUS <castop> EQ
+          | MINUS <castop> EQ
+          | STAR <castop> EQ
+          | SLASH <castop> EQ
+          | PERCENT <castop> EQ
+          | <loc(GTGT)> <castop> EQ
+          | LTLT <castop> EQ
+          | ROR <castop> EQ
+          | ROL <castop> EQ
+          | AMP <castop> EQ
+          | HAT <castop> EQ
+          | PIPE <castop> EQ
+
+<plvalue_r> ::= UNDERSCORE
+              | <var>
+              | <var> <arr_access>
+              | <mem_access>
+
+<plvalue> ::= <loc(<plvalue_r>)>
+
+<implicites> ::= QUESTIONMARK <loc(<braces(<struct_annot>)>)>
+
+<plvalues> ::= <tuple1(<plvalue>)>
+             | LPAREN RPAREN
+             | <implicites>
+             | <implicites> COMMA <rtuple1(<plvalue>)>
+
+<pinstr_r> ::= ARRAYINIT <parens(<var>)> SEMICOLON
+             | <plvalues> <peqop> <pexpr> [<prefix(IF, <pexpr>)>] SEMICOLON
+             | <loc(<var> <parens_tuple(<pexpr>)>)> [<prefix(IF, <pexpr>)>]
+               SEMICOLON
+             | <pif>
+             | FOR <var> EQ <pexpr> TO <pexpr> <pblock>
+             | FOR <var> EQ <pexpr> DOWNTO <pexpr> <pblock>
+             | WHILE [<pblock>] LPAREN <pexpr> RPAREN
+             | WHILE [<pblock>] LPAREN <pexpr> RPAREN <pblock>
+             | <postfix(<pvardecl([COMMA])>, SEMICOLON)>
+
+<pif> ::= IF <pexpr> <pblock>
+        | IF <pexpr> <pblock> ELSE <pelse>
+
+<pelseif> ::= <loc(<pif>)>
+
+<pelse> ::= <loc(<pelseif>)>
+          | <pblock>
+
+<pinstr> ::= <annotations> <loc(<pinstr_r>)>
+
+<pblock_r> ::= <braces(<pinstr>*)>
+
+<pblock> ::= <loc(<pblock_r>)>
+
+<stor_type> ::= <storage> <ptype>
+
+<annot_stor_type> ::= <annotations> <stor_type>
+
+<writable> ::= CONSTANT
+             | MUTABLE
+
+<pointer> ::= [<writable>] POINTER
+
+<ptr> ::= [<pointer>]
+
+<storage> ::= REG <ptr>
+            | STACK <ptr>
+            | INLINE
+            | GLOBAL
+
+<pvardecl(S)> ::= <stor_type> <var> (S <var>)*
+
+<annot_pvardecl> ::= <annotations> <pvardecl(<empty>)>
+
+<pfunbody> ::= LBRACE <pinstr>* [RETURN <tuple(<var>)> SEMICOLON] RBRACE
+
+<call_conv> ::= EXPORT
+              | INLINE
+
+<pfundef> ::= <annotations> [<call_conv>] FN <ident>
+              <parens_tuple(<annot_pvardecl>)> [<prefix(RARROW,
+              <tuple(<annot_stor_type>)>)>] <pfunbody>
+
+<pparam> ::= PARAM <ptype> <ident> EQ <pexpr> SEMICOLON
+
+<pgexpr> ::= <pexpr>
+           | LBRACE <rtuple1(<pexpr>)> RBRACE
+           | <loc(STRING)>
+
+<pglobal> ::= <ptype> <ident> EQ <pgexpr> SEMICOLON
+
+<pexec> ::= EXEC <ident> <parens_tuple(<range>)>
+
+<range> ::= INT COLON INT
+
+<prequire1> ::= <loc(STRING)>
+
+<from> ::= FROM <ident>
+
+<prequire> ::= [<from>] REQUIRE <prequire1>+
+
+<top> ::= <pfundef>
+        | <pparam>
+        | <pglobal>
+        | <pexec>
+        | <prequire>
+        | NAMESPACE <ident> LBRACE <loc(<top>)>* RBRACE
+
+<module_> ::= <loc(<top>)>* EOF
+            | error
+
+<empty> ::= epsilon
+
+<plist1(X, S)> ::= X (S X)*
+
+<loc(X)> ::= X
+
+<prefix(S, X)> ::= S X
+
+<postfix(X, S)> ::= X S
+
+<parens(X)> ::= LPAREN X RPAREN
+
+<brackets(X)> ::= LBRACKET X RBRACKET
+
+<braces(X)> ::= LBRACE X RBRACE
+
+<rtuple(X)> ::= [X (COMMA X)*]
+
+<rtuple1(X)> ::= X (COMMA X)*
+
+<tuple(X)> ::= <parens(<rtuple(X)>)>
+             | <rtuple(X)>
+
+<tuple1(X)> ::= <parens(<rtuple1(X)>)>
+              | <rtuple1(X)>
+
+<parens_tuple(X)> ::= <parens(<rtuple(X)>)>
+
+<brackets_tuple(X)> ::= <brackets(<rtuple(X)>)>
+
+
