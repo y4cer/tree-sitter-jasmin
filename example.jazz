@@ -1,8 +1,5 @@
 fn foo (reg u64 px) -> reg u64 {
-  reg u64 res_x;
-  stack u64 y;
   px = y;
   y0 = 666;
-  res_x = px0;
   return res_x;
 }

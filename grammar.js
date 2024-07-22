@@ -6,6 +6,23 @@ const hexDigit = /[0-9a-fA-F]/;
 const decimalDigit = /[0-9]/;
 const terminator = ';';
 
+const PREC = {
+  subscript: 8,
+  primary: 7,
+  unary: 6,
+  multiplicative: 5,
+  additive: 4,
+  comparative: 3,
+  and: 2,
+  or: 1,
+  conditional: -1,
+};
+
+const multiplicativeOperators = ['*', '/', '%', '<<', '>>', '&', '<<r', '>>r'];
+const additiveOperators = ['+', '-', '|', '^'];
+const comparativeOperators = ['==', '!=', '<', '<=', '>', '>='];
+const assignmentOperators = multiplicativeOperators.concat(additiveOperators).map(operator => operator + '=').concat('=');
+
 module.exports = grammar({
   name: 'jasmin',
 
@@ -14,10 +31,14 @@ module.exports = grammar({
     /\s/
   ],
 
+  conflicts: $ => [
+    [$._size, $._vsize],
+  ],
+
   rules: {
 
     source_file: $ => repeat(choice(
-      $.instruction,
+      $._instr,
       $.function_definition,
     )),
 
@@ -35,7 +56,7 @@ module.exports = grammar({
         '->',
         field('result', $._annot_stor_type),
       )),
-      field('body', optional($.block)),
+      field('body', optional($.funbody)),
     ),
 
     call_conv: $ => choice('inline', 'export'),
@@ -77,10 +98,6 @@ module.exports = grammar({
 
     _top_annotation: $ => '#',
 
-    // _annotations: $ => repeat(
-    //   $._top_annotation,
-    // ),
-
     _keyword: $ => choice(
       'inline',
       'export',
@@ -95,6 +112,47 @@ module.exports = grammar({
       'u64',
       'u128',
       'u256',
+    ),
+
+    _gensize: $ => choice(
+      '1',
+      '2',
+      '4',
+      '8',
+      '16',
+      '32',
+      '64',
+      '128',
+    ),
+
+    _size: $ => choice(
+      '8',
+      '16',
+      '32',
+      '64',
+      '128',
+      '256',
+    ),
+
+    _vsize: $ => choice(
+      '2',
+      '4',
+      '8',
+      '16',
+      '32'
+    ),
+
+    _signletter: $ => choice('s', 'u'),
+
+    _swsize: $ => seq(
+      $._size,
+      $._signletter
+    ),
+
+    _svsize: $ => seq(
+      $._vsize,
+      $._signletter,
+      $._gensize
     ),
 
     _ptype: $ => choice(
@@ -114,9 +172,10 @@ module.exports = grammar({
       $._stor_type,
     ),
 
-    block: $ => seq(
+    funbody: $ => seq(
       '{',
-      repeat($._statement),
+      repeat($._instr),
+      $.return_statement,
       '}'
     ),
 
@@ -133,22 +192,96 @@ module.exports = grammar({
 
     _pexpr: $ => choice(
       $._var,
-      seq(
-        $._var,
-        $._arr_access_len,
-      ),
+      $._var_arr_access,
       'true',
       'false',
       $._int,
-
+      $._mem_access,
+      seq('(', $._cast, ')', $._pexpr),
+      seq($._peop1, $._pexpr),
+      $._binary_expr,
+      seq('(', $._pexpr, ')'),
+      seq($._var, '(', optional(commaSep($._pexpr)), ')'),
+      seq($._prim, '(', optional(commaSep($._pexpr)), ')'),
+      $.conditional_expr
     ),
+
+    conditional_expr: $ => prec.right(PREC.conditional, seq(
+      field('condition', $._pexpr),
+      '?',
+      field('consequence', $._pexpr),
+      ':',
+      field('alternative', $._pexpr),
+    )),
+
+    _castop: $ => choice(
+      $._swsize,
+      $._svsize,
+    ),
+
+    _peop1: $ => prec(PREC.unary, choice(
+      seq('!', $._castop),
+      seq('-', $._castop),
+    )),
+
+    _binary_expr: $ => {
+      const table = [
+        [PREC.multiplicative, choice(...multiplicativeOperators)],
+        [PREC.additive, choice(...additiveOperators)],
+        [PREC.comparative, choice(...comparativeOperators)],
+        [PREC.and, '&&'],
+        [PREC.or, '||'],
+      ];
+
+      return choice(...table.map(([precedence, operator]) =>
+        // @ts-ignore
+        prec.left(precedence, seq(
+          field('left', $._pexpr),
+          //TODO: castop
+          // @ts-ignore
+          field('operator', operator),
+          field('right', $._pexpr),
+        )),
+      ));
+    },
+
+    _cast: $ => choice('int', $._swsize),
+
+    _prim: $ => seq('#', $.identifier),
 
     _var: $ => $.identifier,
 
-    _aligned: $ => choice(
-      'aligned',
-      'unaligned',
+    _mem_ofs: $ => choice(
+      seq('+', $._pexpr),
+      seq('-', $._pexpr),
     ),
+
+    _mem_access: $ => prec(PREC.subscript, seq(
+      optional(seq('(', $._utype, ')')),
+      '[',
+      optional($._unaligned),
+      $._var,
+      $._mem_ofs,
+      ']',
+    )),
+
+
+    _unaligned: $ => choice(
+      '#aligned',
+      '#unaligned',
+    ),
+
+    _arr_access: $ => seq(
+      optional('.'),
+      '[',
+      $._arr_access_i,
+      ']',
+    ),
+
+    _var_arr_access: $ => prec(PREC.subscript, seq(
+      $._var,
+      $._arr_access,
+    )),
 
     _arr_access_len: $ => seq(
       ':',
@@ -156,7 +289,7 @@ module.exports = grammar({
     ),
 
     _arr_access_i: $ => seq(
-      optional($._aligned),
+      optional($._unaligned),
       optional($._utype),
       $._pexpr,
       optional($._arr_access_len),
@@ -165,12 +298,7 @@ module.exports = grammar({
     _plvalue_r: $ => choice(
       '_',
       $._var,
-      seq(
-        optional('.'),
-        '[',
-        $._arr_access_i,
-        ']',
-      ),
+      $._var_arr_access,
     ),
 
     _lvalue: $ => seq(
@@ -180,33 +308,20 @@ module.exports = grammar({
     _assignment: $ => seq(
       $._lvalue,
       '=',
-      $._expression,
+      $._pexpr,
 
     ),
 
-    instruction: $ => choice(
-      $._assignment,
 
-    ),
-
-    _statement: $ => seq(
-      choice(
-        $.return_statement,
-        $.instruction,
-        // TODO: other kinds of statements
-      ),
-      terminator,
+    _instr: $ =>  choice(
+        seq('ArrayInit', '(', $._var, ')', terminator),
+        seq($._assignment, terminator),
     ),
 
     return_statement: $ => seq(
       'return',
-      $._expression,
-    ),
-
-    _expression: $ => choice(
-      $.identifier,
-      $.number
-      // TODO: other kinds of expressions
+      $._pexpr,
+      terminator,
     ),
 
     identifier: $ => /[_a-zA-Z][_a-zA-Z0-9]{0,30}/,

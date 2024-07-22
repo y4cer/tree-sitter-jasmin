@@ -47,6 +47,9 @@
   "tree-sitter": [
     {
       "scope": "source.jasmin",
+      "file-types": [
+        "jazz"
+      ],
       "injection-regex": "^jasmin$"
     }
   ]

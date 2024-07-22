@@ -30,15 +30,1761 @@
     }
   },
   {
-    "type": "block",
+    "type": "call_conv",
     "named": true,
-    "fields": {},
+    "fields": {}
+  },
+  {
+    "type": "conditional_expr",
+    "named": true,
+    "fields": {
+      "alternative": {
+        "multiple": true,
+        "required": true,
+        "types": [
+          {
+            "type": "!",
+            "named": false
+          },
+          {
+            "type": "!=",
+            "named": false
+          },
+          {
+            "type": "#",
+            "named": false
+          },
+          {
+            "type": "#aligned",
+            "named": false
+          },
+          {
+            "type": "#unaligned",
+            "named": false
+          },
+          {
+            "type": "%",
+            "named": false
+          },
+          {
+            "type": "&",
+            "named": false
+          },
+          {
+            "type": "&&",
+            "named": false
+          },
+          {
+            "type": "(",
+            "named": false
+          },
+          {
+            "type": ")",
+            "named": false
+          },
+          {
+            "type": "*",
+            "named": false
+          },
+          {
+            "type": "+",
+            "named": false
+          },
+          {
+            "type": ",",
+            "named": false
+          },
+          {
+            "type": "-",
+            "named": false
+          },
+          {
+            "type": ".",
+            "named": false
+          },
+          {
+            "type": "/",
+            "named": false
+          },
+          {
+            "type": "1",
+            "named": false
+          },
+          {
+            "type": "128",
+            "named": false
+          },
+          {
+            "type": "16",
+            "named": false
+          },
+          {
+            "type": "2",
+            "named": false
+          },
+          {
+            "type": "256",
+            "named": false
+          },
+          {
+            "type": "32",
+            "named": false
+          },
+          {
+            "type": "4",
+            "named": false
+          },
+          {
+            "type": "64",
+            "named": false
+          },
+          {
+            "type": "8",
+            "named": false
+          },
+          {
+            "type": ":",
+            "named": false
+          },
+          {
+            "type": "<",
+            "named": false
+          },
+          {
+            "type": "<<",
+            "named": false
+          },
+          {
+            "type": "<<r",
+            "named": false
+          },
+          {
+            "type": "<=",
+            "named": false
+          },
+          {
+            "type": "==",
+            "named": false
+          },
+          {
+            "type": ">",
+            "named": false
+          },
+          {
+            "type": ">=",
+            "named": false
+          },
+          {
+            "type": ">>",
+            "named": false
+          },
+          {
+            "type": ">>r",
+            "named": false
+          },
+          {
+            "type": "[",
+            "named": false
+          },
+          {
+            "type": "]",
+            "named": false
+          },
+          {
+            "type": "^",
+            "named": false
+          },
+          {
+            "type": "conditional_expr",
+            "named": true
+          },
+          {
+            "type": "false",
+            "named": false
+          },
+          {
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "int",
+            "named": false
+          },
+          {
+            "type": "intLiteral",
+            "named": true
+          },
+          {
+            "type": "s",
+            "named": false
+          },
+          {
+            "type": "true",
+            "named": false
+          },
+          {
+            "type": "u",
+            "named": false
+          },
+          {
+            "type": "u128",
+            "named": false
+          },
+          {
+            "type": "u16",
+            "named": false
+          },
+          {
+            "type": "u256",
+            "named": false
+          },
+          {
+            "type": "u32",
+            "named": false
+          },
+          {
+            "type": "u64",
+            "named": false
+          },
+          {
+            "type": "u8",
+            "named": false
+          },
+          {
+            "type": "|",
+            "named": false
+          },
+          {
+            "type": "||",
+            "named": false
+          }
+        ]
+      },
+      "condition": {
+        "multiple": true,
+        "required": true,
+        "types": [
+          {
+            "type": "!",
+            "named": false
+          },
+          {
+            "type": "!=",
+            "named": false
+          },
+          {
+            "type": "#",
+            "named": false
+          },
+          {
+            "type": "#aligned",
+            "named": false
+          },
+          {
+            "type": "#unaligned",
+            "named": false
+          },
+          {
+            "type": "%",
+            "named": false
+          },
+          {
+            "type": "&",
+            "named": false
+          },
+          {
+            "type": "&&",
+            "named": false
+          },
+          {
+            "type": "(",
+            "named": false
+          },
+          {
+            "type": ")",
+            "named": false
+          },
+          {
+            "type": "*",
+            "named": false
+          },
+          {
+            "type": "+",
+            "named": false
+          },
+          {
+            "type": ",",
+            "named": false
+          },
+          {
+            "type": "-",
+            "named": false
+          },
+          {
+            "type": ".",
+            "named": false
+          },
+          {
+            "type": "/",
+            "named": false
+          },
+          {
+            "type": "1",
+            "named": false
+          },
+          {
+            "type": "128",
+            "named": false
+          },
+          {
+            "type": "16",
+            "named": false
+          },
+          {
+            "type": "2",
+            "named": false
+          },
+          {
+            "type": "256",
+            "named": false
+          },
+          {
+            "type": "32",
+            "named": false
+          },
+          {
+            "type": "4",
+            "named": false
+          },
+          {
+            "type": "64",
+            "named": false
+          },
+          {
+            "type": "8",
+            "named": false
+          },
+          {
+            "type": ":",
+            "named": false
+          },
+          {
+            "type": "<",
+            "named": false
+          },
+          {
+            "type": "<<",
+            "named": false
+          },
+          {
+            "type": "<<r",
+            "named": false
+          },
+          {
+            "type": "<=",
+            "named": false
+          },
+          {
+            "type": "==",
+            "named": false
+          },
+          {
+            "type": ">",
+            "named": false
+          },
+          {
+            "type": ">=",
+            "named": false
+          },
+          {
+            "type": ">>",
+            "named": false
+          },
+          {
+            "type": ">>r",
+            "named": false
+          },
+          {
+            "type": "[",
+            "named": false
+          },
+          {
+            "type": "]",
+            "named": false
+          },
+          {
+            "type": "^",
+            "named": false
+          },
+          {
+            "type": "conditional_expr",
+            "named": true
+          },
+          {
+            "type": "false",
+            "named": false
+          },
+          {
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "int",
+            "named": false
+          },
+          {
+            "type": "intLiteral",
+            "named": true
+          },
+          {
+            "type": "s",
+            "named": false
+          },
+          {
+            "type": "true",
+            "named": false
+          },
+          {
+            "type": "u",
+            "named": false
+          },
+          {
+            "type": "u128",
+            "named": false
+          },
+          {
+            "type": "u16",
+            "named": false
+          },
+          {
+            "type": "u256",
+            "named": false
+          },
+          {
+            "type": "u32",
+            "named": false
+          },
+          {
+            "type": "u64",
+            "named": false
+          },
+          {
+            "type": "u8",
+            "named": false
+          },
+          {
+            "type": "|",
+            "named": false
+          },
+          {
+            "type": "||",
+            "named": false
+          }
+        ]
+      },
+      "consequence": {
+        "multiple": true,
+        "required": true,
+        "types": [
+          {
+            "type": "!",
+            "named": false
+          },
+          {
+            "type": "!=",
+            "named": false
+          },
+          {
+            "type": "#",
+            "named": false
+          },
+          {
+            "type": "#aligned",
+            "named": false
+          },
+          {
+            "type": "#unaligned",
+            "named": false
+          },
+          {
+            "type": "%",
+            "named": false
+          },
+          {
+            "type": "&",
+            "named": false
+          },
+          {
+            "type": "&&",
+            "named": false
+          },
+          {
+            "type": "(",
+            "named": false
+          },
+          {
+            "type": ")",
+            "named": false
+          },
+          {
+            "type": "*",
+            "named": false
+          },
+          {
+            "type": "+",
+            "named": false
+          },
+          {
+            "type": ",",
+            "named": false
+          },
+          {
+            "type": "-",
+            "named": false
+          },
+          {
+            "type": ".",
+            "named": false
+          },
+          {
+            "type": "/",
+            "named": false
+          },
+          {
+            "type": "1",
+            "named": false
+          },
+          {
+            "type": "128",
+            "named": false
+          },
+          {
+            "type": "16",
+            "named": false
+          },
+          {
+            "type": "2",
+            "named": false
+          },
+          {
+            "type": "256",
+            "named": false
+          },
+          {
+            "type": "32",
+            "named": false
+          },
+          {
+            "type": "4",
+            "named": false
+          },
+          {
+            "type": "64",
+            "named": false
+          },
+          {
+            "type": "8",
+            "named": false
+          },
+          {
+            "type": ":",
+            "named": false
+          },
+          {
+            "type": "<",
+            "named": false
+          },
+          {
+            "type": "<<",
+            "named": false
+          },
+          {
+            "type": "<<r",
+            "named": false
+          },
+          {
+            "type": "<=",
+            "named": false
+          },
+          {
+            "type": "==",
+            "named": false
+          },
+          {
+            "type": ">",
+            "named": false
+          },
+          {
+            "type": ">=",
+            "named": false
+          },
+          {
+            "type": ">>",
+            "named": false
+          },
+          {
+            "type": ">>r",
+            "named": false
+          },
+          {
+            "type": "[",
+            "named": false
+          },
+          {
+            "type": "]",
+            "named": false
+          },
+          {
+            "type": "^",
+            "named": false
+          },
+          {
+            "type": "conditional_expr",
+            "named": true
+          },
+          {
+            "type": "false",
+            "named": false
+          },
+          {
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "int",
+            "named": false
+          },
+          {
+            "type": "intLiteral",
+            "named": true
+          },
+          {
+            "type": "s",
+            "named": false
+          },
+          {
+            "type": "true",
+            "named": false
+          },
+          {
+            "type": "u",
+            "named": false
+          },
+          {
+            "type": "u128",
+            "named": false
+          },
+          {
+            "type": "u16",
+            "named": false
+          },
+          {
+            "type": "u256",
+            "named": false
+          },
+          {
+            "type": "u32",
+            "named": false
+          },
+          {
+            "type": "u64",
+            "named": false
+          },
+          {
+            "type": "u8",
+            "named": false
+          },
+          {
+            "type": "|",
+            "named": false
+          },
+          {
+            "type": "||",
+            "named": false
+          }
+        ]
+      },
+      "left": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "!",
+            "named": false
+          },
+          {
+            "type": "!=",
+            "named": false
+          },
+          {
+            "type": "#",
+            "named": false
+          },
+          {
+            "type": "#aligned",
+            "named": false
+          },
+          {
+            "type": "#unaligned",
+            "named": false
+          },
+          {
+            "type": "%",
+            "named": false
+          },
+          {
+            "type": "&",
+            "named": false
+          },
+          {
+            "type": "&&",
+            "named": false
+          },
+          {
+            "type": "(",
+            "named": false
+          },
+          {
+            "type": ")",
+            "named": false
+          },
+          {
+            "type": "*",
+            "named": false
+          },
+          {
+            "type": "+",
+            "named": false
+          },
+          {
+            "type": ",",
+            "named": false
+          },
+          {
+            "type": "-",
+            "named": false
+          },
+          {
+            "type": ".",
+            "named": false
+          },
+          {
+            "type": "/",
+            "named": false
+          },
+          {
+            "type": "1",
+            "named": false
+          },
+          {
+            "type": "128",
+            "named": false
+          },
+          {
+            "type": "16",
+            "named": false
+          },
+          {
+            "type": "2",
+            "named": false
+          },
+          {
+            "type": "256",
+            "named": false
+          },
+          {
+            "type": "32",
+            "named": false
+          },
+          {
+            "type": "4",
+            "named": false
+          },
+          {
+            "type": "64",
+            "named": false
+          },
+          {
+            "type": "8",
+            "named": false
+          },
+          {
+            "type": ":",
+            "named": false
+          },
+          {
+            "type": "<",
+            "named": false
+          },
+          {
+            "type": "<<",
+            "named": false
+          },
+          {
+            "type": "<<r",
+            "named": false
+          },
+          {
+            "type": "<=",
+            "named": false
+          },
+          {
+            "type": "==",
+            "named": false
+          },
+          {
+            "type": ">",
+            "named": false
+          },
+          {
+            "type": ">=",
+            "named": false
+          },
+          {
+            "type": ">>",
+            "named": false
+          },
+          {
+            "type": ">>r",
+            "named": false
+          },
+          {
+            "type": "[",
+            "named": false
+          },
+          {
+            "type": "]",
+            "named": false
+          },
+          {
+            "type": "^",
+            "named": false
+          },
+          {
+            "type": "conditional_expr",
+            "named": true
+          },
+          {
+            "type": "false",
+            "named": false
+          },
+          {
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "int",
+            "named": false
+          },
+          {
+            "type": "intLiteral",
+            "named": true
+          },
+          {
+            "type": "s",
+            "named": false
+          },
+          {
+            "type": "true",
+            "named": false
+          },
+          {
+            "type": "u",
+            "named": false
+          },
+          {
+            "type": "u128",
+            "named": false
+          },
+          {
+            "type": "u16",
+            "named": false
+          },
+          {
+            "type": "u256",
+            "named": false
+          },
+          {
+            "type": "u32",
+            "named": false
+          },
+          {
+            "type": "u64",
+            "named": false
+          },
+          {
+            "type": "u8",
+            "named": false
+          },
+          {
+            "type": "|",
+            "named": false
+          },
+          {
+            "type": "||",
+            "named": false
+          }
+        ]
+      },
+      "operator": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "!=",
+            "named": false
+          },
+          {
+            "type": "%",
+            "named": false
+          },
+          {
+            "type": "&",
+            "named": false
+          },
+          {
+            "type": "&&",
+            "named": false
+          },
+          {
+            "type": "*",
+            "named": false
+          },
+          {
+            "type": "+",
+            "named": false
+          },
+          {
+            "type": "-",
+            "named": false
+          },
+          {
+            "type": "/",
+            "named": false
+          },
+          {
+            "type": "<",
+            "named": false
+          },
+          {
+            "type": "<<",
+            "named": false
+          },
+          {
+            "type": "<<r",
+            "named": false
+          },
+          {
+            "type": "<=",
+            "named": false
+          },
+          {
+            "type": "==",
+            "named": false
+          },
+          {
+            "type": ">",
+            "named": false
+          },
+          {
+            "type": ">=",
+            "named": false
+          },
+          {
+            "type": ">>",
+            "named": false
+          },
+          {
+            "type": ">>r",
+            "named": false
+          },
+          {
+            "type": "^",
+            "named": false
+          },
+          {
+            "type": "|",
+            "named": false
+          },
+          {
+            "type": "||",
+            "named": false
+          }
+        ]
+      },
+      "right": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "!",
+            "named": false
+          },
+          {
+            "type": "!=",
+            "named": false
+          },
+          {
+            "type": "#",
+            "named": false
+          },
+          {
+            "type": "#aligned",
+            "named": false
+          },
+          {
+            "type": "#unaligned",
+            "named": false
+          },
+          {
+            "type": "%",
+            "named": false
+          },
+          {
+            "type": "&",
+            "named": false
+          },
+          {
+            "type": "&&",
+            "named": false
+          },
+          {
+            "type": "(",
+            "named": false
+          },
+          {
+            "type": ")",
+            "named": false
+          },
+          {
+            "type": "*",
+            "named": false
+          },
+          {
+            "type": "+",
+            "named": false
+          },
+          {
+            "type": ",",
+            "named": false
+          },
+          {
+            "type": "-",
+            "named": false
+          },
+          {
+            "type": ".",
+            "named": false
+          },
+          {
+            "type": "/",
+            "named": false
+          },
+          {
+            "type": "1",
+            "named": false
+          },
+          {
+            "type": "128",
+            "named": false
+          },
+          {
+            "type": "16",
+            "named": false
+          },
+          {
+            "type": "2",
+            "named": false
+          },
+          {
+            "type": "256",
+            "named": false
+          },
+          {
+            "type": "32",
+            "named": false
+          },
+          {
+            "type": "4",
+            "named": false
+          },
+          {
+            "type": "64",
+            "named": false
+          },
+          {
+            "type": "8",
+            "named": false
+          },
+          {
+            "type": ":",
+            "named": false
+          },
+          {
+            "type": "<",
+            "named": false
+          },
+          {
+            "type": "<<",
+            "named": false
+          },
+          {
+            "type": "<<r",
+            "named": false
+          },
+          {
+            "type": "<=",
+            "named": false
+          },
+          {
+            "type": "==",
+            "named": false
+          },
+          {
+            "type": ">",
+            "named": false
+          },
+          {
+            "type": ">=",
+            "named": false
+          },
+          {
+            "type": ">>",
+            "named": false
+          },
+          {
+            "type": ">>r",
+            "named": false
+          },
+          {
+            "type": "[",
+            "named": false
+          },
+          {
+            "type": "]",
+            "named": false
+          },
+          {
+            "type": "^",
+            "named": false
+          },
+          {
+            "type": "conditional_expr",
+            "named": true
+          },
+          {
+            "type": "false",
+            "named": false
+          },
+          {
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "int",
+            "named": false
+          },
+          {
+            "type": "intLiteral",
+            "named": true
+          },
+          {
+            "type": "s",
+            "named": false
+          },
+          {
+            "type": "true",
+            "named": false
+          },
+          {
+            "type": "u",
+            "named": false
+          },
+          {
+            "type": "u128",
+            "named": false
+          },
+          {
+            "type": "u16",
+            "named": false
+          },
+          {
+            "type": "u256",
+            "named": false
+          },
+          {
+            "type": "u32",
+            "named": false
+          },
+          {
+            "type": "u64",
+            "named": false
+          },
+          {
+            "type": "u8",
+            "named": false
+          },
+          {
+            "type": "|",
+            "named": false
+          },
+          {
+            "type": "||",
+            "named": false
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "funbody",
+    "named": true,
+    "fields": {
+      "left": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "!",
+            "named": false
+          },
+          {
+            "type": "!=",
+            "named": false
+          },
+          {
+            "type": "#",
+            "named": false
+          },
+          {
+            "type": "#aligned",
+            "named": false
+          },
+          {
+            "type": "#unaligned",
+            "named": false
+          },
+          {
+            "type": "%",
+            "named": false
+          },
+          {
+            "type": "&",
+            "named": false
+          },
+          {
+            "type": "&&",
+            "named": false
+          },
+          {
+            "type": "(",
+            "named": false
+          },
+          {
+            "type": ")",
+            "named": false
+          },
+          {
+            "type": "*",
+            "named": false
+          },
+          {
+            "type": "+",
+            "named": false
+          },
+          {
+            "type": ",",
+            "named": false
+          },
+          {
+            "type": "-",
+            "named": false
+          },
+          {
+            "type": ".",
+            "named": false
+          },
+          {
+            "type": "/",
+            "named": false
+          },
+          {
+            "type": "1",
+            "named": false
+          },
+          {
+            "type": "128",
+            "named": false
+          },
+          {
+            "type": "16",
+            "named": false
+          },
+          {
+            "type": "2",
+            "named": false
+          },
+          {
+            "type": "256",
+            "named": false
+          },
+          {
+            "type": "32",
+            "named": false
+          },
+          {
+            "type": "4",
+            "named": false
+          },
+          {
+            "type": "64",
+            "named": false
+          },
+          {
+            "type": "8",
+            "named": false
+          },
+          {
+            "type": ":",
+            "named": false
+          },
+          {
+            "type": "<",
+            "named": false
+          },
+          {
+            "type": "<<",
+            "named": false
+          },
+          {
+            "type": "<<r",
+            "named": false
+          },
+          {
+            "type": "<=",
+            "named": false
+          },
+          {
+            "type": "==",
+            "named": false
+          },
+          {
+            "type": ">",
+            "named": false
+          },
+          {
+            "type": ">=",
+            "named": false
+          },
+          {
+            "type": ">>",
+            "named": false
+          },
+          {
+            "type": ">>r",
+            "named": false
+          },
+          {
+            "type": "[",
+            "named": false
+          },
+          {
+            "type": "]",
+            "named": false
+          },
+          {
+            "type": "^",
+            "named": false
+          },
+          {
+            "type": "conditional_expr",
+            "named": true
+          },
+          {
+            "type": "false",
+            "named": false
+          },
+          {
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "int",
+            "named": false
+          },
+          {
+            "type": "intLiteral",
+            "named": true
+          },
+          {
+            "type": "s",
+            "named": false
+          },
+          {
+            "type": "true",
+            "named": false
+          },
+          {
+            "type": "u",
+            "named": false
+          },
+          {
+            "type": "u128",
+            "named": false
+          },
+          {
+            "type": "u16",
+            "named": false
+          },
+          {
+            "type": "u256",
+            "named": false
+          },
+          {
+            "type": "u32",
+            "named": false
+          },
+          {
+            "type": "u64",
+            "named": false
+          },
+          {
+            "type": "u8",
+            "named": false
+          },
+          {
+            "type": "|",
+            "named": false
+          },
+          {
+            "type": "||",
+            "named": false
+          }
+        ]
+      },
+      "operator": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "!=",
+            "named": false
+          },
+          {
+            "type": "%",
+            "named": false
+          },
+          {
+            "type": "&",
+            "named": false
+          },
+          {
+            "type": "&&",
+            "named": false
+          },
+          {
+            "type": "*",
+            "named": false
+          },
+          {
+            "type": "+",
+            "named": false
+          },
+          {
+            "type": "-",
+            "named": false
+          },
+          {
+            "type": "/",
+            "named": false
+          },
+          {
+            "type": "<",
+            "named": false
+          },
+          {
+            "type": "<<",
+            "named": false
+          },
+          {
+            "type": "<<r",
+            "named": false
+          },
+          {
+            "type": "<=",
+            "named": false
+          },
+          {
+            "type": "==",
+            "named": false
+          },
+          {
+            "type": ">",
+            "named": false
+          },
+          {
+            "type": ">=",
+            "named": false
+          },
+          {
+            "type": ">>",
+            "named": false
+          },
+          {
+            "type": ">>r",
+            "named": false
+          },
+          {
+            "type": "^",
+            "named": false
+          },
+          {
+            "type": "|",
+            "named": false
+          },
+          {
+            "type": "||",
+            "named": false
+          }
+        ]
+      },
+      "right": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "!",
+            "named": false
+          },
+          {
+            "type": "!=",
+            "named": false
+          },
+          {
+            "type": "#",
+            "named": false
+          },
+          {
+            "type": "#aligned",
+            "named": false
+          },
+          {
+            "type": "#unaligned",
+            "named": false
+          },
+          {
+            "type": "%",
+            "named": false
+          },
+          {
+            "type": "&",
+            "named": false
+          },
+          {
+            "type": "&&",
+            "named": false
+          },
+          {
+            "type": "(",
+            "named": false
+          },
+          {
+            "type": ")",
+            "named": false
+          },
+          {
+            "type": "*",
+            "named": false
+          },
+          {
+            "type": "+",
+            "named": false
+          },
+          {
+            "type": ",",
+            "named": false
+          },
+          {
+            "type": "-",
+            "named": false
+          },
+          {
+            "type": ".",
+            "named": false
+          },
+          {
+            "type": "/",
+            "named": false
+          },
+          {
+            "type": "1",
+            "named": false
+          },
+          {
+            "type": "128",
+            "named": false
+          },
+          {
+            "type": "16",
+            "named": false
+          },
+          {
+            "type": "2",
+            "named": false
+          },
+          {
+            "type": "256",
+            "named": false
+          },
+          {
+            "type": "32",
+            "named": false
+          },
+          {
+            "type": "4",
+            "named": false
+          },
+          {
+            "type": "64",
+            "named": false
+          },
+          {
+            "type": "8",
+            "named": false
+          },
+          {
+            "type": ":",
+            "named": false
+          },
+          {
+            "type": "<",
+            "named": false
+          },
+          {
+            "type": "<<",
+            "named": false
+          },
+          {
+            "type": "<<r",
+            "named": false
+          },
+          {
+            "type": "<=",
+            "named": false
+          },
+          {
+            "type": "==",
+            "named": false
+          },
+          {
+            "type": ">",
+            "named": false
+          },
+          {
+            "type": ">=",
+            "named": false
+          },
+          {
+            "type": ">>",
+            "named": false
+          },
+          {
+            "type": ">>r",
+            "named": false
+          },
+          {
+            "type": "[",
+            "named": false
+          },
+          {
+            "type": "]",
+            "named": false
+          },
+          {
+            "type": "^",
+            "named": false
+          },
+          {
+            "type": "conditional_expr",
+            "named": true
+          },
+          {
+            "type": "false",
+            "named": false
+          },
+          {
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "int",
+            "named": false
+          },
+          {
+            "type": "intLiteral",
+            "named": true
+          },
+          {
+            "type": "s",
+            "named": false
+          },
+          {
+            "type": "true",
+            "named": false
+          },
+          {
+            "type": "u",
+            "named": false
+          },
+          {
+            "type": "u128",
+            "named": false
+          },
+          {
+            "type": "u16",
+            "named": false
+          },
+          {
+            "type": "u256",
+            "named": false
+          },
+          {
+            "type": "u32",
+            "named": false
+          },
+          {
+            "type": "u64",
+            "named": false
+          },
+          {
+            "type": "u8",
+            "named": false
+          },
+          {
+            "type": "|",
+            "named": false
+          },
+          {
+            "type": "||",
+            "named": false
+          }
+        ]
+      }
+    },
     "children": {
       "multiple": true,
-      "required": false,
+      "required": true,
       "types": [
         {
-          "type": "instruction",
+          "type": "conditional_expr",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "intLiteral",
           "named": true
         },
         {
@@ -49,11 +1795,6 @@
     }
   },
   {
-    "type": "call_conv",
-    "named": true,
-    "fields": {}
-  },
-  {
     "type": "function_definition",
     "named": true,
     "fields": {
@@ -62,7 +1803,7 @@
         "required": false,
         "types": [
           {
-            "type": "block",
+            "type": "funbody",
             "named": true
           }
         ]
@@ -81,6 +1822,10 @@
         "multiple": true,
         "required": false,
         "types": [
+          {
+            "type": "#",
+            "named": false
+          },
           {
             "type": "bool",
             "named": false
@@ -166,25 +1911,6 @@
     }
   },
   {
-    "type": "instruction",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "identifier",
-          "named": true
-        },
-        {
-          "type": "number",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
     "type": "intLiteral",
     "named": true,
     "fields": {}
@@ -192,17 +1918,552 @@
   {
     "type": "return_statement",
     "named": true,
-    "fields": {},
+    "fields": {
+      "left": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "!",
+            "named": false
+          },
+          {
+            "type": "!=",
+            "named": false
+          },
+          {
+            "type": "#",
+            "named": false
+          },
+          {
+            "type": "#aligned",
+            "named": false
+          },
+          {
+            "type": "#unaligned",
+            "named": false
+          },
+          {
+            "type": "%",
+            "named": false
+          },
+          {
+            "type": "&",
+            "named": false
+          },
+          {
+            "type": "&&",
+            "named": false
+          },
+          {
+            "type": "(",
+            "named": false
+          },
+          {
+            "type": ")",
+            "named": false
+          },
+          {
+            "type": "*",
+            "named": false
+          },
+          {
+            "type": "+",
+            "named": false
+          },
+          {
+            "type": ",",
+            "named": false
+          },
+          {
+            "type": "-",
+            "named": false
+          },
+          {
+            "type": ".",
+            "named": false
+          },
+          {
+            "type": "/",
+            "named": false
+          },
+          {
+            "type": "1",
+            "named": false
+          },
+          {
+            "type": "128",
+            "named": false
+          },
+          {
+            "type": "16",
+            "named": false
+          },
+          {
+            "type": "2",
+            "named": false
+          },
+          {
+            "type": "256",
+            "named": false
+          },
+          {
+            "type": "32",
+            "named": false
+          },
+          {
+            "type": "4",
+            "named": false
+          },
+          {
+            "type": "64",
+            "named": false
+          },
+          {
+            "type": "8",
+            "named": false
+          },
+          {
+            "type": ":",
+            "named": false
+          },
+          {
+            "type": "<",
+            "named": false
+          },
+          {
+            "type": "<<",
+            "named": false
+          },
+          {
+            "type": "<<r",
+            "named": false
+          },
+          {
+            "type": "<=",
+            "named": false
+          },
+          {
+            "type": "==",
+            "named": false
+          },
+          {
+            "type": ">",
+            "named": false
+          },
+          {
+            "type": ">=",
+            "named": false
+          },
+          {
+            "type": ">>",
+            "named": false
+          },
+          {
+            "type": ">>r",
+            "named": false
+          },
+          {
+            "type": "[",
+            "named": false
+          },
+          {
+            "type": "]",
+            "named": false
+          },
+          {
+            "type": "^",
+            "named": false
+          },
+          {
+            "type": "conditional_expr",
+            "named": true
+          },
+          {
+            "type": "false",
+            "named": false
+          },
+          {
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "int",
+            "named": false
+          },
+          {
+            "type": "intLiteral",
+            "named": true
+          },
+          {
+            "type": "s",
+            "named": false
+          },
+          {
+            "type": "true",
+            "named": false
+          },
+          {
+            "type": "u",
+            "named": false
+          },
+          {
+            "type": "u128",
+            "named": false
+          },
+          {
+            "type": "u16",
+            "named": false
+          },
+          {
+            "type": "u256",
+            "named": false
+          },
+          {
+            "type": "u32",
+            "named": false
+          },
+          {
+            "type": "u64",
+            "named": false
+          },
+          {
+            "type": "u8",
+            "named": false
+          },
+          {
+            "type": "|",
+            "named": false
+          },
+          {
+            "type": "||",
+            "named": false
+          }
+        ]
+      },
+      "operator": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "!=",
+            "named": false
+          },
+          {
+            "type": "%",
+            "named": false
+          },
+          {
+            "type": "&",
+            "named": false
+          },
+          {
+            "type": "&&",
+            "named": false
+          },
+          {
+            "type": "*",
+            "named": false
+          },
+          {
+            "type": "+",
+            "named": false
+          },
+          {
+            "type": "-",
+            "named": false
+          },
+          {
+            "type": "/",
+            "named": false
+          },
+          {
+            "type": "<",
+            "named": false
+          },
+          {
+            "type": "<<",
+            "named": false
+          },
+          {
+            "type": "<<r",
+            "named": false
+          },
+          {
+            "type": "<=",
+            "named": false
+          },
+          {
+            "type": "==",
+            "named": false
+          },
+          {
+            "type": ">",
+            "named": false
+          },
+          {
+            "type": ">=",
+            "named": false
+          },
+          {
+            "type": ">>",
+            "named": false
+          },
+          {
+            "type": ">>r",
+            "named": false
+          },
+          {
+            "type": "^",
+            "named": false
+          },
+          {
+            "type": "|",
+            "named": false
+          },
+          {
+            "type": "||",
+            "named": false
+          }
+        ]
+      },
+      "right": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "!",
+            "named": false
+          },
+          {
+            "type": "!=",
+            "named": false
+          },
+          {
+            "type": "#",
+            "named": false
+          },
+          {
+            "type": "#aligned",
+            "named": false
+          },
+          {
+            "type": "#unaligned",
+            "named": false
+          },
+          {
+            "type": "%",
+            "named": false
+          },
+          {
+            "type": "&",
+            "named": false
+          },
+          {
+            "type": "&&",
+            "named": false
+          },
+          {
+            "type": "(",
+            "named": false
+          },
+          {
+            "type": ")",
+            "named": false
+          },
+          {
+            "type": "*",
+            "named": false
+          },
+          {
+            "type": "+",
+            "named": false
+          },
+          {
+            "type": ",",
+            "named": false
+          },
+          {
+            "type": "-",
+            "named": false
+          },
+          {
+            "type": ".",
+            "named": false
+          },
+          {
+            "type": "/",
+            "named": false
+          },
+          {
+            "type": "1",
+            "named": false
+          },
+          {
+            "type": "128",
+            "named": false
+          },
+          {
+            "type": "16",
+            "named": false
+          },
+          {
+            "type": "2",
+            "named": false
+          },
+          {
+            "type": "256",
+            "named": false
+          },
+          {
+            "type": "32",
+            "named": false
+          },
+          {
+            "type": "4",
+            "named": false
+          },
+          {
+            "type": "64",
+            "named": false
+          },
+          {
+            "type": "8",
+            "named": false
+          },
+          {
+            "type": ":",
+            "named": false
+          },
+          {
+            "type": "<",
+            "named": false
+          },
+          {
+            "type": "<<",
+            "named": false
+          },
+          {
+            "type": "<<r",
+            "named": false
+          },
+          {
+            "type": "<=",
+            "named": false
+          },
+          {
+            "type": "==",
+            "named": false
+          },
+          {
+            "type": ">",
+            "named": false
+          },
+          {
+            "type": ">=",
+            "named": false
+          },
+          {
+            "type": ">>",
+            "named": false
+          },
+          {
+            "type": ">>r",
+            "named": false
+          },
+          {
+            "type": "[",
+            "named": false
+          },
+          {
+            "type": "]",
+            "named": false
+          },
+          {
+            "type": "^",
+            "named": false
+          },
+          {
+            "type": "conditional_expr",
+            "named": true
+          },
+          {
+            "type": "false",
+            "named": false
+          },
+          {
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "int",
+            "named": false
+          },
+          {
+            "type": "intLiteral",
+            "named": true
+          },
+          {
+            "type": "s",
+            "named": false
+          },
+          {
+            "type": "true",
+            "named": false
+          },
+          {
+            "type": "u",
+            "named": false
+          },
+          {
+            "type": "u128",
+            "named": false
+          },
+          {
+            "type": "u16",
+            "named": false
+          },
+          {
+            "type": "u256",
+            "named": false
+          },
+          {
+            "type": "u32",
+            "named": false
+          },
+          {
+            "type": "u64",
+            "named": false
+          },
+          {
+            "type": "u8",
+            "named": false
+          },
+          {
+            "type": "|",
+            "named": false
+          },
+          {
+            "type": "||",
+            "named": false
+          }
+        ]
+      }
+    },
     "children": {
-      "multiple": false,
-      "required": true,
+      "multiple": true,
+      "required": false,
       "types": [
+        {
+          "type": "conditional_expr",
+          "named": true
+        },
         {
           "type": "identifier",
           "named": true
         },
         {
-          "type": "number",
+          "type": "intLiteral",
           "named": true
         }
       ]
@@ -211,21 +2472,592 @@
   {
     "type": "source_file",
     "named": true,
-    "fields": {},
+    "fields": {
+      "left": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "!",
+            "named": false
+          },
+          {
+            "type": "!=",
+            "named": false
+          },
+          {
+            "type": "#",
+            "named": false
+          },
+          {
+            "type": "#aligned",
+            "named": false
+          },
+          {
+            "type": "#unaligned",
+            "named": false
+          },
+          {
+            "type": "%",
+            "named": false
+          },
+          {
+            "type": "&",
+            "named": false
+          },
+          {
+            "type": "&&",
+            "named": false
+          },
+          {
+            "type": "(",
+            "named": false
+          },
+          {
+            "type": ")",
+            "named": false
+          },
+          {
+            "type": "*",
+            "named": false
+          },
+          {
+            "type": "+",
+            "named": false
+          },
+          {
+            "type": ",",
+            "named": false
+          },
+          {
+            "type": "-",
+            "named": false
+          },
+          {
+            "type": ".",
+            "named": false
+          },
+          {
+            "type": "/",
+            "named": false
+          },
+          {
+            "type": "1",
+            "named": false
+          },
+          {
+            "type": "128",
+            "named": false
+          },
+          {
+            "type": "16",
+            "named": false
+          },
+          {
+            "type": "2",
+            "named": false
+          },
+          {
+            "type": "256",
+            "named": false
+          },
+          {
+            "type": "32",
+            "named": false
+          },
+          {
+            "type": "4",
+            "named": false
+          },
+          {
+            "type": "64",
+            "named": false
+          },
+          {
+            "type": "8",
+            "named": false
+          },
+          {
+            "type": ":",
+            "named": false
+          },
+          {
+            "type": "<",
+            "named": false
+          },
+          {
+            "type": "<<",
+            "named": false
+          },
+          {
+            "type": "<<r",
+            "named": false
+          },
+          {
+            "type": "<=",
+            "named": false
+          },
+          {
+            "type": "==",
+            "named": false
+          },
+          {
+            "type": ">",
+            "named": false
+          },
+          {
+            "type": ">=",
+            "named": false
+          },
+          {
+            "type": ">>",
+            "named": false
+          },
+          {
+            "type": ">>r",
+            "named": false
+          },
+          {
+            "type": "[",
+            "named": false
+          },
+          {
+            "type": "]",
+            "named": false
+          },
+          {
+            "type": "^",
+            "named": false
+          },
+          {
+            "type": "conditional_expr",
+            "named": true
+          },
+          {
+            "type": "false",
+            "named": false
+          },
+          {
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "int",
+            "named": false
+          },
+          {
+            "type": "intLiteral",
+            "named": true
+          },
+          {
+            "type": "s",
+            "named": false
+          },
+          {
+            "type": "true",
+            "named": false
+          },
+          {
+            "type": "u",
+            "named": false
+          },
+          {
+            "type": "u128",
+            "named": false
+          },
+          {
+            "type": "u16",
+            "named": false
+          },
+          {
+            "type": "u256",
+            "named": false
+          },
+          {
+            "type": "u32",
+            "named": false
+          },
+          {
+            "type": "u64",
+            "named": false
+          },
+          {
+            "type": "u8",
+            "named": false
+          },
+          {
+            "type": "|",
+            "named": false
+          },
+          {
+            "type": "||",
+            "named": false
+          }
+        ]
+      },
+      "operator": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "!=",
+            "named": false
+          },
+          {
+            "type": "%",
+            "named": false
+          },
+          {
+            "type": "&",
+            "named": false
+          },
+          {
+            "type": "&&",
+            "named": false
+          },
+          {
+            "type": "*",
+            "named": false
+          },
+          {
+            "type": "+",
+            "named": false
+          },
+          {
+            "type": "-",
+            "named": false
+          },
+          {
+            "type": "/",
+            "named": false
+          },
+          {
+            "type": "<",
+            "named": false
+          },
+          {
+            "type": "<<",
+            "named": false
+          },
+          {
+            "type": "<<r",
+            "named": false
+          },
+          {
+            "type": "<=",
+            "named": false
+          },
+          {
+            "type": "==",
+            "named": false
+          },
+          {
+            "type": ">",
+            "named": false
+          },
+          {
+            "type": ">=",
+            "named": false
+          },
+          {
+            "type": ">>",
+            "named": false
+          },
+          {
+            "type": ">>r",
+            "named": false
+          },
+          {
+            "type": "^",
+            "named": false
+          },
+          {
+            "type": "|",
+            "named": false
+          },
+          {
+            "type": "||",
+            "named": false
+          }
+        ]
+      },
+      "right": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "!",
+            "named": false
+          },
+          {
+            "type": "!=",
+            "named": false
+          },
+          {
+            "type": "#",
+            "named": false
+          },
+          {
+            "type": "#aligned",
+            "named": false
+          },
+          {
+            "type": "#unaligned",
+            "named": false
+          },
+          {
+            "type": "%",
+            "named": false
+          },
+          {
+            "type": "&",
+            "named": false
+          },
+          {
+            "type": "&&",
+            "named": false
+          },
+          {
+            "type": "(",
+            "named": false
+          },
+          {
+            "type": ")",
+            "named": false
+          },
+          {
+            "type": "*",
+            "named": false
+          },
+          {
+            "type": "+",
+            "named": false
+          },
+          {
+            "type": ",",
+            "named": false
+          },
+          {
+            "type": "-",
+            "named": false
+          },
+          {
+            "type": ".",
+            "named": false
+          },
+          {
+            "type": "/",
+            "named": false
+          },
+          {
+            "type": "1",
+            "named": false
+          },
+          {
+            "type": "128",
+            "named": false
+          },
+          {
+            "type": "16",
+            "named": false
+          },
+          {
+            "type": "2",
+            "named": false
+          },
+          {
+            "type": "256",
+            "named": false
+          },
+          {
+            "type": "32",
+            "named": false
+          },
+          {
+            "type": "4",
+            "named": false
+          },
+          {
+            "type": "64",
+            "named": false
+          },
+          {
+            "type": "8",
+            "named": false
+          },
+          {
+            "type": ":",
+            "named": false
+          },
+          {
+            "type": "<",
+            "named": false
+          },
+          {
+            "type": "<<",
+            "named": false
+          },
+          {
+            "type": "<<r",
+            "named": false
+          },
+          {
+            "type": "<=",
+            "named": false
+          },
+          {
+            "type": "==",
+            "named": false
+          },
+          {
+            "type": ">",
+            "named": false
+          },
+          {
+            "type": ">=",
+            "named": false
+          },
+          {
+            "type": ">>",
+            "named": false
+          },
+          {
+            "type": ">>r",
+            "named": false
+          },
+          {
+            "type": "[",
+            "named": false
+          },
+          {
+            "type": "]",
+            "named": false
+          },
+          {
+            "type": "^",
+            "named": false
+          },
+          {
+            "type": "conditional_expr",
+            "named": true
+          },
+          {
+            "type": "false",
+            "named": false
+          },
+          {
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "int",
+            "named": false
+          },
+          {
+            "type": "intLiteral",
+            "named": true
+          },
+          {
+            "type": "s",
+            "named": false
+          },
+          {
+            "type": "true",
+            "named": false
+          },
+          {
+            "type": "u",
+            "named": false
+          },
+          {
+            "type": "u128",
+            "named": false
+          },
+          {
+            "type": "u16",
+            "named": false
+          },
+          {
+            "type": "u256",
+            "named": false
+          },
+          {
+            "type": "u32",
+            "named": false
+          },
+          {
+            "type": "u64",
+            "named": false
+          },
+          {
+            "type": "u8",
+            "named": false
+          },
+          {
+            "type": "|",
+            "named": false
+          },
+          {
+            "type": "||",
+            "named": false
+          }
+        ]
+      }
+    },
     "children": {
       "multiple": true,
       "required": false,
       "types": [
         {
+          "type": "conditional_expr",
+          "named": true
+        },
+        {
           "type": "function_definition",
           "named": true
         },
         {
-          "type": "instruction",
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "intLiteral",
           "named": true
         }
       ]
     }
+  },
+  {
+    "type": "!",
+    "named": false
+  },
+  {
+    "type": "!=",
+    "named": false
+  },
+  {
+    "type": "#",
+    "named": false
+  },
+  {
+    "type": "#aligned",
+    "named": false
+  },
+  {
+    "type": "#unaligned",
+    "named": false
+  },
+  {
+    "type": "%",
+    "named": false
+  },
+  {
+    "type": "&",
+    "named": false
+  },
+  {
+    "type": "&&",
+    "named": false
   },
   {
     "type": "(",
@@ -233,6 +3065,14 @@
   },
   {
     "type": ")",
+    "named": false
+  },
+  {
+    "type": "*",
+    "named": false
+  },
+  {
+    "type": "+",
     "named": false
   },
   {
@@ -252,6 +3092,46 @@
     "named": false
   },
   {
+    "type": "/",
+    "named": false
+  },
+  {
+    "type": "1",
+    "named": false
+  },
+  {
+    "type": "128",
+    "named": false
+  },
+  {
+    "type": "16",
+    "named": false
+  },
+  {
+    "type": "2",
+    "named": false
+  },
+  {
+    "type": "256",
+    "named": false
+  },
+  {
+    "type": "32",
+    "named": false
+  },
+  {
+    "type": "4",
+    "named": false
+  },
+  {
+    "type": "64",
+    "named": false
+  },
+  {
+    "type": "8",
+    "named": false
+  },
+  {
     "type": ":",
     "named": false
   },
@@ -260,7 +3140,51 @@
     "named": false
   },
   {
+    "type": "<",
+    "named": false
+  },
+  {
+    "type": "<<",
+    "named": false
+  },
+  {
+    "type": "<<r",
+    "named": false
+  },
+  {
+    "type": "<=",
+    "named": false
+  },
+  {
     "type": "=",
+    "named": false
+  },
+  {
+    "type": "==",
+    "named": false
+  },
+  {
+    "type": ">",
+    "named": false
+  },
+  {
+    "type": ">=",
+    "named": false
+  },
+  {
+    "type": ">>",
+    "named": false
+  },
+  {
+    "type": ">>r",
+    "named": false
+  },
+  {
+    "type": "?",
+    "named": false
+  },
+  {
+    "type": "ArrayInit",
     "named": false
   },
   {
@@ -272,11 +3196,11 @@
     "named": false
   },
   {
-    "type": "_",
+    "type": "^",
     "named": false
   },
   {
-    "type": "aligned",
+    "type": "_",
     "named": false
   },
   {
@@ -324,10 +3248,6 @@
     "named": false
   },
   {
-    "type": "number",
-    "named": true
-  },
-  {
     "type": "ptr",
     "named": false
   },
@@ -340,11 +3260,19 @@
     "named": false
   },
   {
+    "type": "s",
+    "named": false
+  },
+  {
     "type": "stack",
     "named": false
   },
   {
     "type": "true",
+    "named": false
+  },
+  {
+    "type": "u",
     "named": false
   },
   {
@@ -372,11 +3300,15 @@
     "named": false
   },
   {
-    "type": "unaligned",
+    "type": "{",
     "named": false
   },
   {
-    "type": "{",
+    "type": "|",
+    "named": false
+  },
+  {
+    "type": "||",
     "named": false
   },
   {
