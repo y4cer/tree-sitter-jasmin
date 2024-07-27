@@ -6,6 +6,9 @@ const hexDigit = /[0-9a-fA-F]/;
 const decimalDigit = /[0-9]/;
 const terminator = ';';
 
+const decimalDigits = seq(decimalDigit, repeat(decimalDigit));
+const hexDigits = seq(hexDigit, repeat(hexDigit));
+
 const PREC = {
   subscript: 8,
   primary: 7,
@@ -181,8 +184,8 @@ module.exports = grammar({
 
 
     intLiteral: $ => choice(
-      hexDigit,
-      decimalDigit,
+      hexDigits,
+      decimalDigits,
     ),
 
     _int: $ => choice(
@@ -195,7 +198,7 @@ module.exports = grammar({
       $._var_arr_access,
       'true',
       'false',
-      $._int,
+      $.intLiteral,
       $._mem_access,
       seq('(', $._cast, ')', $._pexpr),
       seq($._peop1, $._pexpr),
@@ -305,17 +308,16 @@ module.exports = grammar({
       $.identifier,
     ),
 
-    _assignment: $ => seq(
+    assignment: $ => seq(
       $._lvalue,
       '=',
       $._pexpr,
 
     ),
 
-
     _instr: $ =>  choice(
         seq('ArrayInit', '(', $._var, ')', terminator),
-        seq($._assignment, terminator),
+        seq($.assignment, terminator),
     ),
 
     return_statement: $ => seq(
