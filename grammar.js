@@ -8,6 +8,7 @@ const terminator = ';';
 
 const decimalDigits = seq(decimalDigit, repeat(decimalDigit));
 const hexDigits = seq(hexDigit, repeat(hexDigit));
+const intLiteral = choice(hexDigits, decimalDigits);
 
 const PREC = {
   subscript: 8,
@@ -24,7 +25,8 @@ const PREC = {
 const multiplicativeOperators = ['*', '/', '%', '<<', '>>', '&', '<<r', '>>r'];
 const additiveOperators = ['+', '-', '|', '^'];
 const comparativeOperators = ['==', '!=', '<', '<=', '>', '>='];
-const assignmentOperators = multiplicativeOperators.concat(additiveOperators).map(operator => operator + '=').concat('=');
+// const assignmentOperators = multiplicativeOperators.concat(additiveOperators).map(operator => operator + '=').concat('=');
+const assignmentOperators = ['='];
 
 module.exports = grammar({
   name: 'jasmin',
@@ -41,7 +43,7 @@ module.exports = grammar({
   rules: {
 
     source_file: $ => repeat(choice(
-      $._instr,
+      $.instr,
       $.function_definition,
     )),
 
@@ -66,7 +68,7 @@ module.exports = grammar({
 
     _pvardecl: $ => seq(
       $._stor_type,
-      $._var,
+      $.var,
     ),
 
     annot_pvardecl_list: $ => seq(
@@ -177,44 +179,40 @@ module.exports = grammar({
 
     funbody: $ => seq(
       '{',
-      repeat($._instr),
+      repeat($.instr),
       $.return_statement,
       '}'
     ),
 
+    _int_literal: _ => token(intLiteral),
 
-    intLiteral: $ => choice(
-      hexDigits,
-      decimalDigits,
+    int: $ => choice(
+      $._int_literal,
+      seq('-', $._int_literal),
     ),
 
-    _int: $ => choice(
-      $.intLiteral,
-      seq('-', $.intLiteral),
-    ),
-
-    _pexpr: $ => choice(
-      $._var,
+    pexp: $ => choice(
+      $.var,
       $._var_arr_access,
       'true',
       'false',
-      $.intLiteral,
+      $.int,
       $._mem_access,
-      seq('(', $._cast, ')', $._pexpr),
-      seq($._peop1, $._pexpr),
+      seq('(', $._cast, ')', $.pexp),
+      seq($._peop1, $.pexp),
       $._binary_expr,
-      seq('(', $._pexpr, ')'),
-      seq($._var, '(', optional(commaSep($._pexpr)), ')'),
-      seq($._prim, '(', optional(commaSep($._pexpr)), ')'),
+      seq('(', $.pexp, ')'),
+      seq($.var, '(', optional(commaSep($.pexp)), ')'),
+      seq($._prim, '(', optional(commaSep($.pexp)), ')'),
       $.conditional_expr
     ),
 
     conditional_expr: $ => prec.right(PREC.conditional, seq(
-      field('condition', $._pexpr),
+      field('condition', $.pexp),
       '?',
-      field('consequence', $._pexpr),
+      field('consequence', $.pexp),
       ':',
-      field('alternative', $._pexpr),
+      field('alternative', $.pexp),
     )),
 
     _castop: $ => choice(
@@ -239,11 +237,11 @@ module.exports = grammar({
       return choice(...table.map(([precedence, operator]) =>
         // @ts-ignore
         prec.left(precedence, seq(
-          field('left', $._pexpr),
+          field('left', $.pexp),
           //TODO: castop
           // @ts-ignore
           field('operator', operator),
-          field('right', $._pexpr),
+          field('right', $.pexp),
         )),
       ));
     },
@@ -252,18 +250,18 @@ module.exports = grammar({
 
     _prim: $ => seq('#', $.identifier),
 
-    _var: $ => $.identifier,
+    var: $ => $.identifier,
 
     _mem_ofs: $ => choice(
-      seq('+', $._pexpr),
-      seq('-', $._pexpr),
+      seq('+', $.pexp),
+      seq('-', $.pexp),
     ),
 
     _mem_access: $ => prec(PREC.subscript, seq(
       optional(seq('(', $._utype, ')')),
       '[',
       optional($._unaligned),
-      $._var,
+      $.var,
       $._mem_ofs,
       ']',
     )),
@@ -282,25 +280,25 @@ module.exports = grammar({
     ),
 
     _var_arr_access: $ => prec(PREC.subscript, seq(
-      $._var,
+      $.var,
       $._arr_access,
     )),
 
     _arr_access_len: $ => seq(
       ':',
-      $._pexpr,
+      $.pexp,
     ),
 
     _arr_access_i: $ => seq(
       optional($._unaligned),
       optional($._utype),
-      $._pexpr,
+      $.pexp,
       optional($._arr_access_len),
     ),
 
     _plvalue_r: $ => choice(
       '_',
-      $._var,
+      $.var,
       $._var_arr_access,
     ),
 
@@ -311,18 +309,26 @@ module.exports = grammar({
     assignment: $ => seq(
       $._lvalue,
       '=',
-      $._pexpr,
+      $.pexp,
 
     ),
 
-    _instr: $ =>  choice(
-        seq('ArrayInit', '(', $._var, ')', terminator),
-        seq($.assignment, terminator),
+    instr: $ =>  choice(
+      seq('ArrayInit', '(', $.var, ')', terminator),
+      seq(
+        $._lvalue,
+        choice(...assignmentOperators),
+        optional($._castop),
+        $.pexp,
+        optional(seq('if', $.pexp)),
+        terminator,
+      ),
+      // seq($.assignment, terminator),
     ),
 
     return_statement: $ => seq(
       'return',
-      $._pexpr,
+      $.pexp,
       terminator,
     ),
 
