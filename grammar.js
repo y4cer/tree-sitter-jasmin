@@ -44,6 +44,8 @@ module.exports = grammar({
     [$._size, $._vsize],
   ],
 
+  word: $ => $.identifier,
+
   rules: {
 
     source_file: $ => repeat(choice(
@@ -75,10 +77,11 @@ module.exports = grammar({
 
     call_conv: $ => choice('inline', 'export'),
 
-    _pvardecl: $ => seq(
-      $._stor_type,
+    pvardecl: $ => prec.right(seq(
+      $.stor_type,
       $.var,
-    ),
+      repeat($.var),
+    )),
 
     annot_pvardecl_list: $ => seq(
       '(',
@@ -88,7 +91,7 @@ module.exports = grammar({
 
     annot_pvardecl: $ => seq(
       repeat($._top_annotation),
-      $._pvardecl,
+      $.pvardecl,
     ),
 
     _writable: $ => choice(
@@ -110,7 +113,33 @@ module.exports = grammar({
       'global',
     ),
 
-    _top_annotation: $ => '#',
+    _top_annotation: $ => choice(
+      seq('#', $.annotation),
+      seq('#', braces($._struct_annot)),
+    ),
+
+    // annotations: $ => repeat($._top_annotation),
+
+    _annotationLabel: $ => choice(
+      $.identifier,
+      $._keyword,
+      // TODO: is this actual string literal??
+      'string',
+    ),
+
+    _simple_attribute: $ => choice(
+      $.int,
+      'string',
+      $._keyword,
+      $._utype,
+    ),
+
+    _attribute: $ => choice(
+      seq('=', $._simple_attribute),
+      seq('=', braces($._struct_annot)),
+    ),
+
+    annotation: $ => seq($._annotationLabel, optional($._attribute)),
 
     _keyword: $ => choice(
       'inline',
@@ -173,17 +202,17 @@ module.exports = grammar({
       'bool',
       'int',
       $._utype,
-      // | utype brackets(<pexpr)>
+      seq($._utype, '[', $.pexp, ']'),
     ),
 
-    _stor_type: $ => seq(
+    stor_type: $ => seq(
       $._storage,
       $._ptype,
     ),
 
     _annot_stor_type: $ => seq(
       repeat($._top_annotation),
-      $._stor_type,
+      $.stor_type,
     ),
 
     funbody: $ => seq(
@@ -318,21 +347,24 @@ module.exports = grammar({
       optional($._arr_access_len),
     ),
 
-    _plvalue_r: $ => choice(
+    _plvalue: $ => prec.right(choice(
       '_',
       $.var,
       $._var_arr_access,
+      $._mem_access,
+    )),
+
+    _struct_annot: $ => rtuple1($.annotation),
+
+    _implicities: $ => seq(
+      '?', braces($._struct_annot),
     ),
 
-    _lvalue: $ => seq(
-      $.identifier,
-    ),
-
-    assignment: $ => seq(
-      $._lvalue,
-      '=',
-      $.pexp,
-
+    _plvalues: $ => choice(
+      tuple1($._plvalue),
+      seq('(', ')'),
+      $._implicities,
+      seq($._implicities, ',', rtuple1($._plvalue)),
     ),
 
     instr: $ =>  seq(
@@ -340,7 +372,7 @@ module.exports = grammar({
       choice(
         seq('ArrayInit', '(', $.var, ')', terminator),
         seq(
-          $._lvalue,
+          $._plvalues,
           choice(...assignmentOperators),
           optional($._castop),
           $.pexp,
@@ -357,6 +389,7 @@ module.exports = grammar({
         $.pif,
         $.for_loop,
         $.while_loop,
+        seq($.pvardecl, terminator),
       ),
     ),
 
@@ -435,3 +468,31 @@ function commaSep1(rule) {
 function commaSep(rule) {
   return optional(commaSep1(rule));
 }
+
+function parens(rule) {
+  return seq('(', rule, ')');
+}
+
+function brackets(rule) {
+  return seq('[', rule, ']');
+}
+
+function braces(rule) {
+  return seq('{', rule, '}');
+}
+
+function rtuple1(rule) {
+  return seq(rule, repeat(rule));
+}
+
+function tuple1(rule) {
+  return choice(
+    parens(rtuple1(rule)),
+    rtuple1(rule),
+  );
+}
+
+function tuple(rule) {
+  return parens(optional(rtuple1(rule)));
+}
+

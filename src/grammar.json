@@ -1,5 +1,6 @@
 {
   "name": "jasmin",
+  "word": "identifier",
   "rules": {
     "source_file": {
       "type": "REPEAT",
@@ -144,18 +145,29 @@
         }
       ]
     },
-    "_pvardecl": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "SYMBOL",
-          "name": "_stor_type"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "var"
-        }
-      ]
+    "pvardecl": {
+      "type": "PREC_RIGHT",
+      "value": 0,
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "SYMBOL",
+            "name": "stor_type"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "var"
+          },
+          {
+            "type": "REPEAT",
+            "content": {
+              "type": "SYMBOL",
+              "name": "var"
+            }
+          }
+        ]
+      }
     },
     "annot_pvardecl_list": {
       "type": "SEQ",
@@ -223,7 +235,7 @@
         },
         {
           "type": "SYMBOL",
-          "name": "_pvardecl"
+          "name": "pvardecl"
         }
       ]
     },
@@ -321,8 +333,151 @@
       ]
     },
     "_top_annotation": {
-      "type": "STRING",
-      "value": "#"
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "STRING",
+              "value": "#"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "annotation"
+            }
+          ]
+        },
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "STRING",
+              "value": "#"
+            },
+            {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "STRING",
+                  "value": "{"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "_struct_annot"
+                },
+                {
+                  "type": "STRING",
+                  "value": "}"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "_annotationLabel": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "identifier"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_keyword"
+        },
+        {
+          "type": "STRING",
+          "value": "string"
+        }
+      ]
+    },
+    "_simple_attribute": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "int"
+        },
+        {
+          "type": "STRING",
+          "value": "string"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_keyword"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_utype"
+        }
+      ]
+    },
+    "_attribute": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "STRING",
+              "value": "="
+            },
+            {
+              "type": "SYMBOL",
+              "name": "_simple_attribute"
+            }
+          ]
+        },
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "STRING",
+              "value": "="
+            },
+            {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "STRING",
+                  "value": "{"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "_struct_annot"
+                },
+                {
+                  "type": "STRING",
+                  "value": "}"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "annotation": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "_annotationLabel"
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "_attribute"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        }
+      ]
     },
     "_keyword": {
       "type": "CHOICE",
@@ -522,10 +677,31 @@
         {
           "type": "SYMBOL",
           "name": "_utype"
+        },
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "_utype"
+            },
+            {
+              "type": "STRING",
+              "value": "["
+            },
+            {
+              "type": "SYMBOL",
+              "name": "pexp"
+            },
+            {
+              "type": "STRING",
+              "value": "]"
+            }
+          ]
         }
       ]
     },
-    "_stor_type": {
+    "stor_type": {
       "type": "SEQ",
       "members": [
         {
@@ -550,7 +726,7 @@
         },
         {
           "type": "SYMBOL",
-          "name": "_stor_type"
+          "name": "stor_type"
         }
       ]
     },
@@ -1522,46 +1698,171 @@
         }
       ]
     },
-    "_plvalue_r": {
+    "_plvalue": {
+      "type": "PREC_RIGHT",
+      "value": 0,
+      "content": {
+        "type": "CHOICE",
+        "members": [
+          {
+            "type": "STRING",
+            "value": "_"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "var"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "_var_arr_access"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "_mem_access"
+          }
+        ]
+      }
+    },
+    "_struct_annot": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "annotation"
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "SYMBOL",
+            "name": "annotation"
+          }
+        }
+      ]
+    },
+    "_implicities": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "?"
+        },
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "STRING",
+              "value": "{"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "_struct_annot"
+            },
+            {
+              "type": "STRING",
+              "value": "}"
+            }
+          ]
+        }
+      ]
+    },
+    "_plvalues": {
       "type": "CHOICE",
       "members": [
         {
-          "type": "STRING",
-          "value": "_"
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "STRING",
+                  "value": "("
+                },
+                {
+                  "type": "SEQ",
+                  "members": [
+                    {
+                      "type": "SYMBOL",
+                      "name": "_plvalue"
+                    },
+                    {
+                      "type": "REPEAT",
+                      "content": {
+                        "type": "SYMBOL",
+                        "name": "_plvalue"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "STRING",
+                  "value": ")"
+                }
+              ]
+            },
+            {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "SYMBOL",
+                  "name": "_plvalue"
+                },
+                {
+                  "type": "REPEAT",
+                  "content": {
+                    "type": "SYMBOL",
+                    "name": "_plvalue"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "STRING",
+              "value": "("
+            },
+            {
+              "type": "STRING",
+              "value": ")"
+            }
+          ]
         },
         {
           "type": "SYMBOL",
-          "name": "var"
+          "name": "_implicities"
         },
         {
-          "type": "SYMBOL",
-          "name": "_var_arr_access"
-        }
-      ]
-    },
-    "_lvalue": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "SYMBOL",
-          "name": "identifier"
-        }
-      ]
-    },
-    "assignment": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "SYMBOL",
-          "name": "_lvalue"
-        },
-        {
-          "type": "STRING",
-          "value": "="
-        },
-        {
-          "type": "SYMBOL",
-          "name": "pexp"
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "_implicities"
+            },
+            {
+              "type": "STRING",
+              "value": ","
+            },
+            {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "SYMBOL",
+                  "name": "_plvalue"
+                },
+                {
+                  "type": "REPEAT",
+                  "content": {
+                    "type": "SYMBOL",
+                    "name": "_plvalue"
+                  }
+                }
+              ]
+            }
+          ]
         }
       ]
     },
@@ -1611,7 +1912,7 @@
               "members": [
                 {
                   "type": "SYMBOL",
-                  "name": "_lvalue"
+                  "name": "_plvalues"
                 },
                 {
                   "type": "CHOICE",
@@ -1728,6 +2029,22 @@
             {
               "type": "SYMBOL",
               "name": "while_loop"
+            },
+            {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "SYMBOL",
+                  "name": "pvardecl"
+                },
+                {
+                  "type": "TOKEN",
+                  "content": {
+                    "type": "STRING",
+                    "value": ";"
+                  }
+                }
+              ]
             }
           ]
         }
