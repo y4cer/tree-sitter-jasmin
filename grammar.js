@@ -43,13 +43,18 @@ module.exports = grammar({
   rules: {
 
     source_file: $ => repeat(choice(
-      $.instr,
       $.function_definition,
+      $.param,
+
     )),
 
-    _definition: $ => choice(
-      $.function_definition
-      // TODO: other kinds of definitions
+    param: $ => seq(
+      'param',
+      $._ptype,
+      $.identifier,
+      '=',
+      $.pexp,
+      terminator,
     ),
 
     function_definition: $ => seq(

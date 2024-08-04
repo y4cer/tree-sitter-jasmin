@@ -8,21 +8,44 @@
         "members": [
           {
             "type": "SYMBOL",
-            "name": "instr"
+            "name": "function_definition"
           },
           {
             "type": "SYMBOL",
-            "name": "function_definition"
+            "name": "param"
           }
         ]
       }
     },
-    "_definition": {
-      "type": "CHOICE",
+    "param": {
+      "type": "SEQ",
       "members": [
         {
+          "type": "STRING",
+          "value": "param"
+        },
+        {
           "type": "SYMBOL",
-          "name": "function_definition"
+          "name": "_ptype"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "identifier"
+        },
+        {
+          "type": "STRING",
+          "value": "="
+        },
+        {
+          "type": "SYMBOL",
+          "name": "pexp"
+        },
+        {
+          "type": "TOKEN",
+          "content": {
+            "type": "STRING",
+            "value": ";"
+          }
         }
       ]
     },
@@ -836,19 +859,8 @@
               "name": "pexp"
             },
             {
-              "type": "STRING",
-              "value": "{"
-            },
-            {
-              "type": "REPEAT",
-              "content": {
-                "type": "SYMBOL",
-                "name": "instr"
-              }
-            },
-            {
-              "type": "STRING",
-              "value": "}"
+              "type": "SYMBOL",
+              "name": "pblock"
             }
           ]
         },
@@ -864,19 +876,8 @@
               "name": "pexp"
             },
             {
-              "type": "STRING",
-              "value": "{"
-            },
-            {
-              "type": "REPEAT",
-              "content": {
-                "type": "SYMBOL",
-                "name": "instr"
-              }
-            },
-            {
-              "type": "STRING",
-              "value": "}"
+              "type": "SYMBOL",
+              "name": "pblock"
             },
             {
               "type": "STRING",
@@ -890,24 +891,8 @@
                   "name": "pif"
                 },
                 {
-                  "type": "SEQ",
-                  "members": [
-                    {
-                      "type": "STRING",
-                      "value": "{"
-                    },
-                    {
-                      "type": "REPEAT",
-                      "content": {
-                        "type": "SYMBOL",
-                        "name": "instr"
-                      }
-                    },
-                    {
-                      "type": "STRING",
-                      "value": "}"
-                    }
-                  ]
+                  "type": "SYMBOL",
+                  "name": "pblock"
                 }
               ]
             }
@@ -1683,8 +1668,127 @@
                   }
                 }
               ]
+            },
+            {
+              "type": "SYMBOL",
+              "name": "pif"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "for_loop"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "while_loop"
             }
           ]
+        }
+      ]
+    },
+    "for_loop": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "for"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "var"
+        },
+        {
+          "type": "STRING",
+          "value": "="
+        },
+        {
+          "type": "SYMBOL",
+          "name": "pexp"
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "STRING",
+              "value": "to"
+            },
+            {
+              "type": "STRING",
+              "value": "downto"
+            }
+          ]
+        },
+        {
+          "type": "SYMBOL",
+          "name": "pexp"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "pblock"
+        }
+      ]
+    },
+    "while_loop": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "while"
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "pblock"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "STRING",
+          "value": "("
+        },
+        {
+          "type": "SYMBOL",
+          "name": "pexp"
+        },
+        {
+          "type": "STRING",
+          "value": ")"
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "pblock"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        }
+      ]
+    },
+    "pblock": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "{"
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "SYMBOL",
+            "name": "instr"
+          }
+        },
+        {
+          "type": "STRING",
+          "value": "}"
         }
       ]
     },

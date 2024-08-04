@@ -71,6 +71,29 @@
     }
   },
   {
+    "type": "for_loop",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "pblock",
+          "named": true
+        },
+        {
+          "type": "pexp",
+          "named": true
+        },
+        {
+          "type": "var",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "funbody",
     "named": true,
     "fields": {},
@@ -214,6 +237,10 @@
       "required": true,
       "types": [
         {
+          "type": "for_loop",
+          "named": true
+        },
+        {
           "type": "identifier",
           "named": true
         },
@@ -222,7 +249,15 @@
           "named": true
         },
         {
+          "type": "pif",
+          "named": true
+        },
+        {
           "type": "var",
+          "named": true
+        },
+        {
+          "type": "while_loop",
           "named": true
         }
       ]
@@ -232,6 +267,40 @@
     "type": "int",
     "named": true,
     "fields": {}
+  },
+  {
+    "type": "param",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "pexp",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "pblock",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "instr",
+          "named": true
+        }
+      ]
+    }
   },
   {
     "type": "pexp",
@@ -380,7 +449,7 @@
       "required": true,
       "types": [
         {
-          "type": "instr",
+          "type": "pblock",
           "named": true
         },
         {
@@ -422,7 +491,7 @@
           "named": true
         },
         {
-          "type": "instr",
+          "type": "param",
           "named": true
         }
       ]
@@ -438,6 +507,25 @@
       "types": [
         {
           "type": "identifier",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "while_loop",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "pblock",
+          "named": true
+        },
+        {
+          "type": "pexp",
           "named": true
         }
       ]
@@ -632,6 +720,10 @@
     "named": false
   },
   {
+    "type": "downto",
+    "named": false
+  },
+  {
     "type": "else",
     "named": false
   },
@@ -645,6 +737,10 @@
   },
   {
     "type": "fn",
+    "named": false
+  },
+  {
+    "type": "for",
     "named": false
   },
   {
@@ -672,6 +768,10 @@
     "named": false
   },
   {
+    "type": "param",
+    "named": false
+  },
+  {
     "type": "ptr",
     "named": false
   },
@@ -689,6 +789,10 @@
   },
   {
     "type": "stack",
+    "named": false
+  },
+  {
+    "type": "to",
     "named": false
   },
   {
@@ -721,6 +825,10 @@
   },
   {
     "type": "u8",
+    "named": false
+  },
+  {
+    "type": "while",
     "named": false
   },
   {
