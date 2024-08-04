@@ -1964,6 +1964,54 @@
                   "members": [
                     {
                       "type": "STRING",
+                      "value": "*="
+                    },
+                    {
+                      "type": "STRING",
+                      "value": "/="
+                    },
+                    {
+                      "type": "STRING",
+                      "value": "%="
+                    },
+                    {
+                      "type": "STRING",
+                      "value": "<<="
+                    },
+                    {
+                      "type": "STRING",
+                      "value": ">>="
+                    },
+                    {
+                      "type": "STRING",
+                      "value": "&="
+                    },
+                    {
+                      "type": "STRING",
+                      "value": "<<r="
+                    },
+                    {
+                      "type": "STRING",
+                      "value": ">>r="
+                    },
+                    {
+                      "type": "STRING",
+                      "value": "+="
+                    },
+                    {
+                      "type": "STRING",
+                      "value": "-="
+                    },
+                    {
+                      "type": "STRING",
+                      "value": "|="
+                    },
+                    {
+                      "type": "STRING",
+                      "value": "^="
+                    },
+                    {
+                      "type": "STRING",
                       "value": "="
                     }
                   ]

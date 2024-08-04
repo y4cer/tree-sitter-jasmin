@@ -596,11 +596,19 @@
     "named": false
   },
   {
+    "type": "%=",
+    "named": false
+  },
+  {
     "type": "&",
     "named": false
   },
   {
     "type": "&&",
+    "named": false
+  },
+  {
+    "type": "&=",
     "named": false
   },
   {
@@ -616,7 +624,15 @@
     "named": false
   },
   {
+    "type": "*=",
+    "named": false
+  },
+  {
     "type": "+",
+    "named": false
+  },
+  {
+    "type": "+=",
     "named": false
   },
   {
@@ -625,6 +641,10 @@
   },
   {
     "type": "-",
+    "named": false
+  },
+  {
+    "type": "-=",
     "named": false
   },
   {
@@ -637,6 +657,10 @@
   },
   {
     "type": "/",
+    "named": false
+  },
+  {
+    "type": "/=",
     "named": false
   },
   {
@@ -692,7 +716,15 @@
     "named": false
   },
   {
+    "type": "<<=",
+    "named": false
+  },
+  {
     "type": "<<r",
+    "named": false
+  },
+  {
+    "type": "<<r=",
     "named": false
   },
   {
@@ -720,7 +752,15 @@
     "named": false
   },
   {
+    "type": ">>=",
+    "named": false
+  },
+  {
     "type": ">>r",
+    "named": false
+  },
+  {
+    "type": ">>r=",
     "named": false
   },
   {
@@ -741,6 +781,10 @@
   },
   {
     "type": "^",
+    "named": false
+  },
+  {
+    "type": "^=",
     "named": false
   },
   {
@@ -881,6 +925,10 @@
   },
   {
     "type": "|",
+    "named": false
+  },
+  {
+    "type": "|=",
     "named": false
   },
   {

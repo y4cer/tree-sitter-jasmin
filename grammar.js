@@ -29,8 +29,7 @@ const PREC = {
 const multiplicativeOperators = ['*', '/', '%', '<<', '>>', '&', '<<r', '>>r'];
 const additiveOperators = ['+', '-', '|', '^'];
 const comparativeOperators = ['==', '!=', '<', '<=', '>', '>='];
-// const assignmentOperators = multiplicativeOperators.concat(additiveOperators).map(operator => operator + '=').concat('=');
-const assignmentOperators = ['='];
+const assignmentOperators = multiplicativeOperators.concat(additiveOperators).map(operator => operator + '=').concat('=');
 
 module.exports = grammar({
   name: 'jasmin',
