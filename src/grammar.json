@@ -587,31 +587,79 @@
             "type": "SEQ",
             "members": [
               {
-                "type": "PATTERN",
-                "value": "[0-9a-fA-F]"
+                "type": "STRING",
+                "value": "0"
               },
               {
-                "type": "REPEAT",
-                "content": {
-                  "type": "PATTERN",
-                  "value": "[0-9a-fA-F]"
-                }
+                "type": "CHOICE",
+                "members": [
+                  {
+                    "type": "STRING",
+                    "value": "x"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "X"
+                  }
+                ]
+              },
+              {
+                "type": "SEQ",
+                "members": [
+                  {
+                    "type": "PATTERN",
+                    "value": "[0-9a-fA-F]"
+                  },
+                  {
+                    "type": "REPEAT",
+                    "content": {
+                      "type": "PATTERN",
+                      "value": "[0-9a-fA-F]"
+                    }
+                  }
+                ]
               }
             ]
           },
           {
-            "type": "SEQ",
+            "type": "CHOICE",
             "members": [
               {
-                "type": "PATTERN",
-                "value": "[0-9]"
+                "type": "STRING",
+                "value": "0"
               },
               {
-                "type": "REPEAT",
-                "content": {
-                  "type": "PATTERN",
-                  "value": "[0-9]"
-                }
+                "type": "SEQ",
+                "members": [
+                  {
+                    "type": "PATTERN",
+                    "value": "[1-9]"
+                  },
+                  {
+                    "type": "CHOICE",
+                    "members": [
+                      {
+                        "type": "SEQ",
+                        "members": [
+                          {
+                            "type": "PATTERN",
+                            "value": "[0-9]"
+                          },
+                          {
+                            "type": "REPEAT",
+                            "content": {
+                              "type": "PATTERN",
+                              "value": "[0-9]"
+                            }
+                          }
+                        ]
+                      },
+                      {
+                        "type": "BLANK"
+                      }
+                    ]
+                  }
+                ]
               }
             ]
           }

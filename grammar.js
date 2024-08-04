@@ -8,7 +8,11 @@ const terminator = token(';');
 
 const decimalDigits = seq(decimalDigit, repeat(decimalDigit));
 const hexDigits = seq(hexDigit, repeat(hexDigit));
-const intLiteral = choice(hexDigits, decimalDigits);
+
+const hexLiteral = seq('0', choice('x', 'X'), hexDigits);
+const decimalLiteral = choice('0', seq(/[1-9]/, optional(decimalDigits)));
+
+const intLiteral = choice(hexLiteral, decimalLiteral);
 
 const PREC = {
   subscript: 8,
