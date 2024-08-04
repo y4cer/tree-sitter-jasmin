@@ -236,7 +236,7 @@
           "named": true
         },
         {
-          "type": "pvardecl",
+          "type": "pvardecl_comma",
           "named": true
         },
         {
@@ -452,6 +452,25 @@
   },
   {
     "type": "pvardecl",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "stor_type",
+          "named": true
+        },
+        {
+          "type": "var",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "pvardecl_comma",
     "named": true,
     "fields": {},
     "children": {

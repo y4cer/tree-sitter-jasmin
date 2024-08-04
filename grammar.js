@@ -83,6 +83,15 @@ module.exports = grammar({
       repeat($.var),
     )),
 
+    pvardecl_comma: $ => prec.right(seq(
+      $.stor_type,
+      $.var,
+      choice(
+        repeat($.var),
+        repeat(seq(',', $.var)),
+      ),
+    )),
+
     annot_pvardecl_list: $ => seq(
       '(',
       optional(commaSep($.annot_pvardecl)),
@@ -389,7 +398,7 @@ module.exports = grammar({
         $.pif,
         $.for_loop,
         $.while_loop,
-        seq($.pvardecl, terminator),
+        seq($.pvardecl_comma, terminator),
       ),
     ),
 

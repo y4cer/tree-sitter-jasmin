@@ -169,6 +169,51 @@
         ]
       }
     },
+    "pvardecl_comma": {
+      "type": "PREC_RIGHT",
+      "value": 0,
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "SYMBOL",
+            "name": "stor_type"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "var"
+          },
+          {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "REPEAT",
+                "content": {
+                  "type": "SYMBOL",
+                  "name": "var"
+                }
+              },
+              {
+                "type": "REPEAT",
+                "content": {
+                  "type": "SEQ",
+                  "members": [
+                    {
+                      "type": "STRING",
+                      "value": ","
+                    },
+                    {
+                      "type": "SYMBOL",
+                      "name": "var"
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
     "annot_pvardecl_list": {
       "type": "SEQ",
       "members": [
@@ -2035,7 +2080,7 @@
               "members": [
                 {
                   "type": "SYMBOL",
-                  "name": "pvardecl"
+                  "name": "pvardecl_comma"
                 },
                 {
                   "type": "TOKEN",
