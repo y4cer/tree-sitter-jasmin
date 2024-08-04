@@ -4,7 +4,7 @@
 
 const hexDigit = /[0-9a-fA-F]/;
 const decimalDigit = /[0-9]/;
-const terminator = ';';
+const terminator = token(';');
 
 const decimalDigits = seq(decimalDigit, repeat(decimalDigit));
 const hexDigits = seq(hexDigit, repeat(hexDigit));
@@ -207,6 +207,19 @@ module.exports = grammar({
       $.conditional_expr
     ),
 
+    pif: $ => choice(
+      seq(
+        'if', $.pexp, $.pblock),
+      seq(
+        'if', $.pexp, $.pblock,
+        'else',
+        choice(
+          $.pif,
+          $.pblock,
+        ),
+      ),
+    ),
+
     conditional_expr: $ => prec.right(PREC.conditional, seq(
       field('condition', $.pexp),
       '?',
@@ -313,17 +326,44 @@ module.exports = grammar({
 
     ),
 
-    instr: $ =>  choice(
-      seq('ArrayInit', '(', $.var, ')', terminator),
-      seq(
-        $._lvalue,
-        choice(...assignmentOperators),
-        optional($._castop),
-        $.pexp,
-        optional(seq('if', $.pexp)),
-        terminator,
+    instr: $ =>  seq(
+      repeat($._top_annotation),
+      choice(
+        seq('ArrayInit', '(', $.var, ')', terminator),
+        seq(
+          $._lvalue,
+          choice(...assignmentOperators),
+          optional($._castop),
+          $.pexp,
+          optional(seq('if', $.pexp)),
+          terminator,
+        ),
+        seq(
+          $.var, '(', $.pexp, ')',
+          optional(
+            seq('if', $.pexp,),
+          ),
+          terminator,
+        ),
+        $.pif,
+        $.for_loop,
+        $.while_loop,
       ),
-      // seq($.assignment, terminator),
+    ),
+
+    for_loop: $ => seq(
+      'for', $.var, '=', $.pexp, choice('to', 'downto'), $.pexp,
+      $.pblock,
+    ),
+
+    while_loop: $ => seq(
+      'while', optional($.pblock), '(', $.pexp, ')', optional($.pblock),
+    ),
+
+    pblock: $ => seq(
+      '{',
+        repeat($.instr),
+      '}',
     ),
 
     return_statement: $ => seq(

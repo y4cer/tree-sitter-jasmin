@@ -372,6 +372,29 @@
     }
   },
   {
+    "type": "pif",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "instr",
+          "named": true
+        },
+        {
+          "type": "pexp",
+          "named": true
+        },
+        {
+          "type": "pif",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "return_statement",
     "named": true,
     "fields": {},
@@ -606,6 +629,10 @@
   },
   {
     "type": "const",
+    "named": false
+  },
+  {
+    "type": "else",
     "named": false
   },
   {
