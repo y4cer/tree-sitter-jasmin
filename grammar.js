@@ -15,6 +15,8 @@ const decimalLiteral = choice('0', seq(/[1-9]/, optional(decimalDigits)));
 const intLiteral = choice(hexLiteral, decimalLiteral);
 
 const PREC = {
+  call: 15,
+  cast: 12,
   subscript: 8,
   primary: 7,
   unary: 6,
@@ -23,6 +25,7 @@ const PREC = {
   comparative: 3,
   and: 2,
   or: 1,
+  default: 0,
   conditional: -1,
   assignment: -2,
 };
@@ -52,10 +55,10 @@ module.exports = grammar({
 
   rules: {
 
-    source_file: $ => repeat(choice(
+    top: $ => repeat(choice(
       $.function_definition,
       $.param,
-
+      $.global,
     )),
 
     param: $ => seq(
@@ -65,6 +68,22 @@ module.exports = grammar({
       '=',
       $.pexp,
       terminator,
+    ),
+
+    global: $ => seq(
+      $._ptype,
+      $.identifier,
+      '=',
+      $._pgexpr,
+      terminator
+    ),
+
+    _pgexpr: $ => seq(
+      $.pexp,
+      choice(
+        braces(rtuple1($.pexp)),
+        'string',
+      ),
     ),
 
     function_definition: $ => seq(
@@ -232,26 +251,41 @@ module.exports = grammar({
       '}'
     ),
 
-    _int_literal: _ => token(intLiteral),
+    int: _ => token(intLiteral),
 
-    int: $ => choice(
-      $._int_literal,
-      seq('-', $._int_literal),
+    cast_expression: $ => prec(PREC.cast, seq(
+      '(', $._cast, ')', $.pexp,
+    )),
+
+    boolean_expression: _ => choice(
+      'true',
+      'false',
     ),
+
+    unary_expression: $ => prec.left(PREC.unary, seq(
+      $._peop1, $.pexp
+    )),
+
+    function_call: $ => prec.left(PREC.call, seq(
+      $.var, '(', optional(commaSep($.pexp)), ')'
+    )),
+
+    builtin_call: $ => prec.left(PREC.call, seq(
+      $._prim, '(', optional(commaSep($.pexp)), ')'
+    )),
 
     pexp: $ => choice(
       $.var,
       $._var_arr_access,
-      'true',
-      'false',
       $.int,
       $._mem_access,
-      seq('(', $._cast, ')', $.pexp),
-      seq($._peop1, $.pexp),
+      $.cast_expression,
       $.binary_expr,
-      seq('(', $.pexp, ')'),
-      seq($.var, '(', optional(commaSep($.pexp)), ')'),
-      seq($._prim, '(', optional(commaSep($.pexp)), ')'),
+      $.boolean_expression,
+      $.unary_expression,
+      // idk what this is seq('(', $.pexp, ')'),
+      $.function_call,
+      $.builtin_call,
       $.conditional_expr
     ),
 

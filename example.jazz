@@ -1,15 +1,3 @@
-param int N_ROUND = 24;
-param int N_COLUMN = 4;
-param int ROUND_CONSTANT = 0x9e377900;
+param bool use_shufb = true;
 
-inline
-fn swap(reg ptr u32[12] state, inline int i, inline int j) -> reg ptr u32[12] {
-    reg u32 x y;
-
-    x = ;
-    y = state[j];
-    state[i] = y;
-    state[j] = x;
-
-    return state;
-}
+require "gimliv.jinc"
