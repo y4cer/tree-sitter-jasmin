@@ -24,12 +24,13 @@ const PREC = {
   and: 2,
   or: 1,
   conditional: -1,
+  assignment: -2,
 };
 
 const multiplicativeOperators = ['*', '/', '%', '<<', '>>', '&', '<<r', '>>r'];
 const additiveOperators = ['+', '-', '|', '^'];
 const comparativeOperators = ['==', '!=', '<', '<=', '>', '>='];
-const assignmentOperators = multiplicativeOperators.concat(additiveOperators).map(operator => operator + '=').concat('=');
+const assignmentOperators = multiplicativeOperators.concat(additiveOperators).map(operator => token(operator + '=')).concat(token('='));
 
 module.exports = grammar({
   name: 'jasmin',
@@ -40,7 +41,11 @@ module.exports = grammar({
   ],
 
   conflicts: $ => [
-    [$._size, $._vsize],
+
+  ],
+
+  inline: $ => [
+
   ],
 
   word: $ => $.identifier,
@@ -149,62 +154,89 @@ module.exports = grammar({
 
     annotation: $ => seq($._annotationLabel, optional($._attribute)),
 
-    _keyword: $ => choice(
+    _keyword: _ => token(choice(
       'inline',
       'export',
       'reg',
       'stack',
-    ),
+    )),
 
-    _utype: $ => choice(
+    _utype: _ => token(choice(
       'u8',
       'u16',
       'u32',
       'u64',
       'u128',
       'u256',
-    ),
+    )),
 
-    _gensize: $ => choice(
-      '1',
-      '2',
-      '4',
-      '8',
-      '16',
-      '32',
-      '64',
-      '128',
-    ),
+    // _gensize: _ => token(choice(
+    //   '1',
+    //   '2',
+    //   '4',
+    //   '8',
+    //   '16',
+    //   '32',
+    //   '64',
+    //   '128',
+    // )),
 
-    _size: $ => choice(
-      '8',
-      '16',
-      '32',
-      '64',
-      '128',
-      '256',
-    ),
+    // _size: _ => token(choice(
+    //   '8',
+    //   '16',
+    //   '32',
+    //   '64',
+    //   '128',
+    //   '256',
+    // )),
 
-    _vsize: $ => choice(
-      '2',
-      '4',
-      '8',
-      '16',
-      '32'
-    ),
+    // _vsize: _ => token(choice(
+    //   '2',
+    //   '4',
+    //   '8',
+    //   '16',
+    //   '32'
+    // )),
 
     _signletter: $ => choice('s', 'u'),
 
-    _swsize: $ => seq(
-      $._size,
-      $._signletter
-    ),
+    _swsize: _ => token(seq(
+        // $._size,
+        choice(
+          '8',
+          '16',
+          '32',
+          '64',
+          '128',
+          '256',
+        ),
+        // $._signletter
+        choice('s', 'u')
+      )),
 
-    _svsize: $ => seq(
-      $._vsize,
-      $._signletter,
-      $._gensize
-    ),
+    _svsize: _ => token(seq(
+      // $._vsize,
+      choice(
+        '2',
+        '4',
+        '8',
+        '16',
+        '32'
+      ),
+      // $._signletter,
+      choice('s', 'u'),
+      // $._gensize
+      choice(
+        '1',
+        '2',
+        '4',
+        '8',
+        '16',
+        '32',
+        '64',
+        '128',
+      )
+    )),
 
     _ptype: $ => choice(
       'bool',
@@ -246,7 +278,7 @@ module.exports = grammar({
       $._mem_access,
       seq('(', $._cast, ')', $.pexp),
       seq($._peop1, $.pexp),
-      $._binary_expr,
+      $.binary_expr,
       seq('(', $.pexp, ')'),
       seq($.var, '(', optional(commaSep($.pexp)), ')'),
       seq($._prim, '(', optional(commaSep($.pexp)), ')'),
@@ -284,7 +316,7 @@ module.exports = grammar({
       seq('-', $._castop),
     )),
 
-    _binary_expr: $ => {
+    binary_expr: $ => {
       const table = [
         [PREC.multiplicative, choice(...multiplicativeOperators)],
         [PREC.additive, choice(...additiveOperators)],
@@ -375,18 +407,21 @@ module.exports = grammar({
       seq($._implicities, ',', rtuple1($._plvalue)),
     ),
 
+    assignmentExpr: $ => prec.right(PREC.assignment, seq(
+        field('left', $._plvalues),
+        field('operator', choice(...assignmentOperators)),
+        field('right', seq(
+          optional($._castop),
+          $.pexp,
+          optional(seq('if', $.pexp)),
+      )),
+    )),
+
     instr: $ =>  seq(
       repeat($._top_annotation),
       choice(
         seq('ArrayInit', '(', $.var, ')', terminator),
-        seq(
-          $._plvalues,
-          choice(...assignmentOperators),
-          optional($._castop),
-          $.pexp,
-          optional(seq('if', $.pexp)),
-          terminator,
-        ),
+        seq($.assignmentExpr, terminator),
         seq(
           $.var, '(', $.pexp, ')',
           optional(
@@ -423,8 +458,6 @@ module.exports = grammar({
     ),
 
     identifier: $ => /[_a-zA-Z][_a-zA-Z0-9]{0,30}/,
-
-    number: $ => /\d+/,
 
     // http://stackoverflow.com/questions/13014947/regex-to-match-a-c-style-multiline-comment/36328890#36328890
     comment: _ => token(choice(
