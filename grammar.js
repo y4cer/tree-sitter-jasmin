@@ -131,8 +131,6 @@ module.exports = grammar({
       seq('#', braces($._struct_annot)),
     ),
 
-    // annotations: $ => repeat($._top_annotation),
-
     _annotationLabel: $ => choice(
       $.identifier,
       $._keyword,
@@ -169,34 +167,6 @@ module.exports = grammar({
       'u128',
       'u256',
     )),
-
-    // _gensize: _ => token(choice(
-    //   '1',
-    //   '2',
-    //   '4',
-    //   '8',
-    //   '16',
-    //   '32',
-    //   '64',
-    //   '128',
-    // )),
-
-    // _size: _ => token(choice(
-    //   '8',
-    //   '16',
-    //   '32',
-    //   '64',
-    //   '128',
-    //   '256',
-    // )),
-
-    // _vsize: _ => token(choice(
-    //   '2',
-    //   '4',
-    //   '8',
-    //   '16',
-    //   '32'
-    // )),
 
     _signletter: $ => choice('s', 'u'),
 
