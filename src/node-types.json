@@ -52,6 +52,10 @@
         {
           "type": "int",
           "named": true
+        },
+        {
+          "type": "string_literal",
+          "named": true
         }
       ]
     }
@@ -175,6 +179,10 @@
             "named": false
           },
           {
+            "type": "<<s=",
+            "named": false
+          },
+          {
             "type": "=",
             "named": false
           },
@@ -184,6 +192,10 @@
           },
           {
             "type": ">>r=",
+            "named": false
+          },
+          {
+            "type": ">>s=",
             "named": false
           },
           {
@@ -200,6 +212,10 @@
         "multiple": true,
         "required": true,
         "types": [
+          {
+            "type": "castop",
+            "named": true
+          },
           {
             "type": "if",
             "named": false
@@ -275,7 +291,15 @@
             "named": false
           },
           {
+            "type": "<<s",
+            "named": false
+          },
+          {
             "type": "<=",
+            "named": false
+          },
+          {
+            "type": "<s",
             "named": false
           },
           {
@@ -299,6 +323,14 @@
             "named": false
           },
           {
+            "type": ">>s",
+            "named": false
+          },
+          {
+            "type": ">s",
+            "named": false
+          },
+          {
             "type": "^",
             "named": false
           },
@@ -313,9 +345,13 @@
         ]
       },
       "right": {
-        "multiple": false,
+        "multiple": true,
         "required": true,
         "types": [
+          {
+            "type": "castop",
+            "named": true
+          },
           {
             "type": "pexp",
             "named": true
@@ -367,6 +403,11 @@
         }
       ]
     }
+  },
+  {
+    "type": "castop",
+    "named": true,
+    "fields": {}
   },
   {
     "type": "conditional_expr",
@@ -433,7 +474,7 @@
     "fields": {},
     "children": {
       "multiple": true,
-      "required": true,
+      "required": false,
       "types": [
         {
           "type": "instr",
@@ -498,6 +539,18 @@
             "named": false
           },
           {
+            "type": "(",
+            "named": false
+          },
+          {
+            "type": ")",
+            "named": false
+          },
+          {
+            "type": ",",
+            "named": false
+          },
+          {
             "type": "annotation",
             "named": true
           },
@@ -551,6 +604,10 @@
         },
         {
           "type": "pexp",
+          "named": true
+        },
+        {
+          "type": "string_literal",
           "named": true
         }
       ]
@@ -746,12 +803,31 @@
     }
   },
   {
+    "type": "require",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "string_literal",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "return_statement",
     "named": true,
     "fields": {},
     "children": {
-      "multiple": false,
-      "required": true,
+      "multiple": true,
+      "required": false,
       "types": [
         {
           "type": "pexp",
@@ -776,6 +852,25 @@
     }
   },
   {
+    "type": "string_literal",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "escape_sequence",
+          "named": true
+        },
+        {
+          "type": "string_content",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "top",
     "named": true,
     "fields": {},
@@ -794,6 +889,10 @@
         {
           "type": "param",
           "named": true
+        },
+        {
+          "type": "require",
+          "named": true
         }
       ]
     }
@@ -803,9 +902,13 @@
     "named": true,
     "fields": {},
     "children": {
-      "multiple": false,
+      "multiple": true,
       "required": true,
       "types": [
+        {
+          "type": "castop",
+          "named": true
+        },
         {
           "type": "pexp",
           "named": true
@@ -853,6 +956,10 @@
   },
   {
     "type": "!=",
+    "named": false
+  },
+  {
+    "type": "\"",
     "named": false
   },
   {
@@ -968,7 +1075,19 @@
     "named": false
   },
   {
+    "type": "<<s",
+    "named": false
+  },
+  {
+    "type": "<<s=",
+    "named": false
+  },
+  {
     "type": "<=",
+    "named": false
+  },
+  {
+    "type": "<s",
     "named": false
   },
   {
@@ -1001,6 +1120,18 @@
   },
   {
     "type": ">>r=",
+    "named": false
+  },
+  {
+    "type": ">>s",
+    "named": false
+  },
+  {
+    "type": ">>s=",
+    "named": false
+  },
+  {
+    "type": ">s",
     "named": false
   },
   {
@@ -1052,6 +1183,10 @@
     "named": false
   },
   {
+    "type": "escape_sequence",
+    "named": true
+  },
+  {
     "type": "export",
     "named": false
   },
@@ -1065,6 +1200,10 @@
   },
   {
     "type": "for",
+    "named": false
+  },
+  {
+    "type": "from",
     "named": false
   },
   {
@@ -1108,6 +1247,10 @@
     "named": false
   },
   {
+    "type": "require",
+    "named": false
+  },
+  {
     "type": "return",
     "named": false
   },
@@ -1120,8 +1263,8 @@
     "named": false
   },
   {
-    "type": "string",
-    "named": false
+    "type": "string_content",
+    "named": true
   },
   {
     "type": "to",

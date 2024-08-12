@@ -15,6 +15,7 @@ const decimalLiteral = choice('0', seq(/[1-9]/, optional(decimalDigits)));
 const intLiteral = choice(hexLiteral, decimalLiteral);
 
 const PREC = {
+  return: 16,
   call: 15,
   cast: 12,
   subscript: 8,
@@ -30,9 +31,9 @@ const PREC = {
   assignment: -2,
 };
 
-const multiplicativeOperators = ['*', '/', '%', '<<', '>>', '&', '<<r', '>>r'];
+const multiplicativeOperators = ['*', '/', '%', '<<', '>>', '&', '<<r', '>>r', '>>s', '<<s'];
 const additiveOperators = ['+', '-', '|', '^'];
-const comparativeOperators = ['==', '!=', '<', '<=', '>', '>='];
+const comparativeOperators = ['==', '!=', '<', '<=', '>', '>=', '<s', '>s'];
 const assignmentOperators = multiplicativeOperators.concat(additiveOperators).map(operator => token(operator + '=')).concat(token('='));
 
 module.exports = grammar({
@@ -59,6 +60,7 @@ module.exports = grammar({
       $.function_definition,
       $.param,
       $.global,
+      $.require,
     )),
 
     param: $ => seq(
@@ -78,11 +80,38 @@ module.exports = grammar({
       terminator
     ),
 
+    require: $ => seq(
+      optional(seq('from', $.identifier)),
+      'require',
+      $.string_literal,
+    ),
+
+    // taken from https://github.com/tree-sitter/tree-sitter-c/blob/master/grammar.js#L1297
+    string_literal: $ => seq(
+      '"',
+      repeat(choice(
+        alias(token.immediate(prec(1, /[^\\"\n]+/)), $.string_content),
+        $.escape_sequence,
+      )),
+      '"',
+    ),
+
+    escape_sequence: _ => token(prec(1, seq(
+      '\\',
+      choice(
+        /[^xuU]/,
+        /\d{2,3}/,
+        /x[0-9a-fA-F]{2,}/,
+        /u[0-9a-fA-F]{4}/,
+        /U[0-9a-fA-F]{8}/,
+      ),
+    ))),
+
     _pgexpr: $ => seq(
       $.pexp,
       choice(
         braces(rtuple1($.pexp)),
-        'string',
+        $.string_literal,
       ),
     ),
 
@@ -153,13 +182,12 @@ module.exports = grammar({
     _annotationLabel: $ => choice(
       $.identifier,
       $._keyword,
-      // TODO: is this actual string literal??
-      'string',
+      $.string_literal,
     ),
 
     _simple_attribute: $ => choice(
       $.int,
-      'string',
+      $.string_literal,
       $._keyword,
       $._utype,
     ),
@@ -201,7 +229,7 @@ module.exports = grammar({
         ),
         // $._signletter
         choice('s', 'u')
-      )),
+    )),
 
     _svsize: _ => token(seq(
       // $._vsize,
@@ -241,13 +269,13 @@ module.exports = grammar({
 
     _annot_stor_type: $ => seq(
       repeat($._top_annotation),
-      $.stor_type,
+      tuple($.stor_type),
     ),
 
     funbody: $ => seq(
       '{',
       repeat($.instr),
-      $.return_statement,
+      optional($.return_statement),
       '}'
     ),
 
@@ -283,7 +311,7 @@ module.exports = grammar({
       $.binary_expr,
       $.boolean_expression,
       $.unary_expression,
-      // idk what this is seq('(', $.pexp, ')'),
+      seq('(', $.pexp, ')'),
       $.function_call,
       $.builtin_call,
       $.conditional_expr
@@ -310,14 +338,14 @@ module.exports = grammar({
       field('alternative', $.pexp),
     )),
 
-    _castop: $ => choice(
+    castop: $ => choice(
       $._swsize,
       $._svsize,
     ),
 
     _peop1: $ => prec(PREC.unary, choice(
-      seq('!', $._castop),
-      seq('-', $._castop),
+      seq('!', optional($.castop)),
+      seq('-', optional($.castop)),
     )),
 
     binary_expr: $ => {
@@ -333,10 +361,11 @@ module.exports = grammar({
         // @ts-ignore
         prec.left(precedence, seq(
           field('left', $.pexp),
-          //TODO: castop
-          // @ts-ignore
           field('operator', operator),
-          field('right', $.pexp),
+          field('right', seq(
+            optional($.castop),
+            $.pexp,
+          )),
         )),
       ));
     },
@@ -406,6 +435,7 @@ module.exports = grammar({
 
     _plvalues: $ => choice(
       tuple1($._plvalue),
+      rtuple1($._plvalue),
       seq('(', ')'),
       $._implicities,
       seq($._implicities, ',', rtuple1($._plvalue)),
@@ -415,7 +445,7 @@ module.exports = grammar({
         field('left', $._plvalues),
         field('operator', choice(...assignmentOperators)),
         field('right', seq(
-          optional($._castop),
+          optional($.castop),
           $.pexp,
           optional(seq('if', $.pexp)),
       )),
@@ -455,13 +485,13 @@ module.exports = grammar({
       '}',
     ),
 
-    return_statement: $ => seq(
+    return_statement: $ => prec.left(PREC.return, seq(
       'return',
-      $.pexp,
+      optional(tuple($.pexp)),
       terminator,
-    ),
+    )),
 
-    identifier: $ => /[_a-zA-Z][_a-zA-Z0-9]{0,30}/,
+    identifier: $ => /[_a-zA-Z][_a-zA-Z0-9]{0,100}/,
 
     // http://stackoverflow.com/questions/13014947/regex-to-match-a-c-style-multiline-comment/36328890#36328890
     comment: _ => token(choice(
@@ -527,7 +557,7 @@ function braces(rule) {
 }
 
 function rtuple1(rule) {
-  return seq(rule, repeat(rule));
+  return commaSep1(rule);
 }
 
 function tuple1(rule) {
@@ -538,6 +568,9 @@ function tuple1(rule) {
 }
 
 function tuple(rule) {
-  return parens(optional(rtuple1(rule)));
+  return choice(
+    parens(rtuple1(rule)),
+    rtuple1(rule),
+  );
 }
 
