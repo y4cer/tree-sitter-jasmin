@@ -436,7 +436,7 @@ module.exports = grammar({
     struct_annot: $ => commaSep1($.annotation),
 
     implicities: $ => seq(
-      '?', braces($.struct_annot),
+      '?', braces(optional($.struct_annot)),
     ),
 
     _plvalues: $ => choice(
@@ -463,7 +463,7 @@ module.exports = grammar({
         seq('ArrayInit', '(', $.var, ')', terminator),
         seq($.assignmentExpr, terminator),
         seq(
-          $.var, '(', $.pexp, ')',
+          $.var, parens(commaSep($.pexp)),
           optional(
             seq('if', $.pexp,),
           ),

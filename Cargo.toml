@@ -1,12 +1,12 @@
 [package]
-name = "tree-sitter-your-language-name"
-description = "YourLanguageName grammar for tree-sitter"
+name = "tree-sitter-jasmin"
+description = "jasmin grammar for tree-sitter"
 version = "0.0.1"
 license = "MIT"
 readme = "README.md"
-keywords = ["incremental", "parsing", "tree-sitter", "your-language-name"]
+keywords = ["incremental", "parsing", "tree-sitter", "jasmin"]
 categories = ["parsing", "text-editors"]
-repository = "https://github.com/tree-sitter/tree-sitter-your-language-name"
+repository = "https://github.com/y4cer/tree-sitter-jasmin"
 edition = "2021"
 autoexamples = false
 

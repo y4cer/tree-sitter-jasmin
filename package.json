@@ -2,7 +2,7 @@
   "name": "tree-sitter-jasmin",
   "version": "0.0.1",
   "description": "Jasmin grammar for tree-sitter",
-  "repository": "github:tree-sitter/tree-sitter-jasmin",
+  "repository": "github:y4cer/tree-sitter-jasmin",
   "license": "MIT",
   "main": "bindings/node",
   "types": "bindings/node",
