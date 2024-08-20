@@ -61,6 +61,7 @@ module.exports = grammar({
       $.param,
       $.global,
       $.require,
+      $.exec,
     )),
 
     param: $ => seq(
@@ -86,6 +87,12 @@ module.exports = grammar({
       $.string_literal,
     ),
 
+    exec: $ => seq(
+      'exec',
+      $.identifier,
+     '(', optional(seq($.int, ':', $.int)), ')'
+    ),
+
     // taken from https://github.com/tree-sitter/tree-sitter-c/blob/master/grammar.js#L1297
     string_literal: $ => seq(
       '"',
@@ -107,12 +114,10 @@ module.exports = grammar({
       ),
     ))),
 
-    _pgexpr: $ => seq(
+    _pgexpr: $ => choice(
       $.pexp,
-      choice(
-        braces(rtuple1($.pexp)),
-        $.string_literal,
-      ),
+      braces(rtuple1($.pexp)),
+      $.string_literal,
     ),
 
     function_definition: $ => seq(
@@ -176,10 +181,10 @@ module.exports = grammar({
 
     _top_annotation: $ => choice(
       seq('#', $.annotation),
-      seq('#', braces($._struct_annot)),
+      seq('#', braces($.struct_annot)),
     ),
 
-    _annotationLabel: $ => choice(
+    annotationLabel: $ => choice(
       $.identifier,
       $._keyword,
       $.string_literal,
@@ -190,14 +195,15 @@ module.exports = grammar({
       $.string_literal,
       $._keyword,
       $._utype,
+      $.identifier,
     ),
 
     _attribute: $ => choice(
       seq('=', $._simple_attribute),
-      seq('=', braces($._struct_annot)),
+      seq('=', braces($.struct_annot)),
     ),
 
-    annotation: $ => seq($._annotationLabel, optional($._attribute)),
+    annotation: $ => seq($.annotationLabel, optional($._attribute)),
 
     _keyword: _ => token(choice(
       'inline',
@@ -386,7 +392,7 @@ module.exports = grammar({
       '[',
       optional($._unaligned),
       $.var,
-      $._mem_ofs,
+      optional($._mem_ofs),
       ']',
     )),
 
@@ -427,18 +433,18 @@ module.exports = grammar({
       $._mem_access,
     )),
 
-    _struct_annot: $ => rtuple1($.annotation),
+    struct_annot: $ => commaSep1($.annotation),
 
-    _implicities: $ => seq(
-      '?', braces($._struct_annot),
+    implicities: $ => seq(
+      '?', braces($.struct_annot),
     ),
 
     _plvalues: $ => choice(
       tuple1($._plvalue),
       rtuple1($._plvalue),
       seq('(', ')'),
-      $._implicities,
-      seq($._implicities, ',', rtuple1($._plvalue)),
+      $.implicities,
+      seq($.implicities, ',', rtuple1($._plvalue)),
     ),
 
     assignmentExpr: $ => prec.right(PREC.assignment, seq(

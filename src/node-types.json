@@ -14,6 +14,10 @@
         {
           "type": "pvardecl",
           "named": true
+        },
+        {
+          "type": "struct_annot",
+          "named": true
         }
       ]
     }
@@ -39,10 +43,10 @@
     "fields": {},
     "children": {
       "multiple": true,
-      "required": false,
+      "required": true,
       "types": [
         {
-          "type": "annotation",
+          "type": "annotationLabel",
           "named": true
         },
         {
@@ -51,6 +55,29 @@
         },
         {
           "type": "int",
+          "named": true
+        },
+        {
+          "type": "string_literal",
+          "named": true
+        },
+        {
+          "type": "struct_annot",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "annotationLabel",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "identifier",
           "named": true
         },
         {
@@ -105,10 +132,6 @@
             "named": false
           },
           {
-            "type": "?",
-            "named": false
-          },
-          {
             "type": "[",
             "named": false
           },
@@ -121,7 +144,7 @@
             "named": false
           },
           {
-            "type": "annotation",
+            "type": "implicities",
             "named": true
           },
           {
@@ -131,14 +154,6 @@
           {
             "type": "var",
             "named": true
-          },
-          {
-            "type": "{",
-            "named": false
-          },
-          {
-            "type": "}",
-            "named": false
           }
         ]
       },
@@ -446,6 +461,25 @@
     }
   },
   {
+    "type": "exec",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "int",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "for_loop",
     "named": true,
     "fields": {},
@@ -559,6 +593,10 @@
             "named": true
           },
           {
+            "type": "struct_annot",
+            "named": true
+          },
+          {
             "type": "{",
             "named": false
           },
@@ -614,6 +652,21 @@
     }
   },
   {
+    "type": "implicities",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "struct_annot",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "instr",
     "named": true,
     "fields": {},
@@ -643,6 +696,10 @@
         },
         {
           "type": "pvardecl_comma",
+          "named": true
+        },
+        {
+          "type": "struct_annot",
           "named": true
         },
         {
@@ -871,6 +928,21 @@
     }
   },
   {
+    "type": "struct_annot",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "annotation",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "top",
     "named": true,
     "fields": {},
@@ -878,6 +950,10 @@
       "multiple": true,
       "required": false,
       "types": [
+        {
+          "type": "exec",
+          "named": true
+        },
         {
           "type": "function_definition",
           "named": true
@@ -1187,6 +1263,10 @@
     "named": true
   },
   {
+    "type": "exec",
+    "named": false
+  },
+  {
     "type": "export",
     "named": false
   },
@@ -1224,11 +1304,11 @@
   },
   {
     "type": "int",
-    "named": true
+    "named": false
   },
   {
     "type": "int",
-    "named": false
+    "named": true
   },
   {
     "type": "mut",

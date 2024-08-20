@@ -22,6 +22,10 @@
           {
             "type": "SYMBOL",
             "name": "require"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "exec"
           }
         ]
       }
@@ -120,6 +124,52 @@
         }
       ]
     },
+    "exec": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "exec"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "identifier"
+        },
+        {
+          "type": "STRING",
+          "value": "("
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "SYMBOL",
+                  "name": "int"
+                },
+                {
+                  "type": "STRING",
+                  "value": ":"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "int"
+                }
+              ]
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "STRING",
+          "value": ")"
+        }
+      ]
+    },
     "string_literal": {
       "type": "SEQ",
       "members": [
@@ -203,58 +253,53 @@
       }
     },
     "_pgexpr": {
-      "type": "SEQ",
+      "type": "CHOICE",
       "members": [
         {
           "type": "SYMBOL",
           "name": "pexp"
         },
         {
-          "type": "CHOICE",
+          "type": "SEQ",
           "members": [
+            {
+              "type": "STRING",
+              "value": "{"
+            },
             {
               "type": "SEQ",
               "members": [
                 {
-                  "type": "STRING",
-                  "value": "{"
+                  "type": "SYMBOL",
+                  "name": "pexp"
                 },
                 {
-                  "type": "SEQ",
-                  "members": [
-                    {
-                      "type": "SYMBOL",
-                      "name": "pexp"
-                    },
-                    {
-                      "type": "REPEAT",
-                      "content": {
-                        "type": "SEQ",
-                        "members": [
-                          {
-                            "type": "STRING",
-                            "value": ","
-                          },
-                          {
-                            "type": "SYMBOL",
-                            "name": "pexp"
-                          }
-                        ]
+                  "type": "REPEAT",
+                  "content": {
+                    "type": "SEQ",
+                    "members": [
+                      {
+                        "type": "STRING",
+                        "value": ","
+                      },
+                      {
+                        "type": "SYMBOL",
+                        "name": "pexp"
                       }
-                    }
-                  ]
-                },
-                {
-                  "type": "STRING",
-                  "value": "}"
+                    ]
+                  }
                 }
               ]
             },
             {
-              "type": "SYMBOL",
-              "name": "string_literal"
+              "type": "STRING",
+              "value": "}"
             }
           ]
+        },
+        {
+          "type": "SYMBOL",
+          "name": "string_literal"
         }
       ]
     },
@@ -617,7 +662,7 @@
                 },
                 {
                   "type": "SYMBOL",
-                  "name": "_struct_annot"
+                  "name": "struct_annot"
                 },
                 {
                   "type": "STRING",
@@ -629,7 +674,7 @@
         }
       ]
     },
-    "_annotationLabel": {
+    "annotationLabel": {
       "type": "CHOICE",
       "members": [
         {
@@ -664,6 +709,10 @@
         {
           "type": "SYMBOL",
           "name": "_utype"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "identifier"
         }
       ]
     },
@@ -699,7 +748,7 @@
                 },
                 {
                   "type": "SYMBOL",
-                  "name": "_struct_annot"
+                  "name": "struct_annot"
                 },
                 {
                   "type": "STRING",
@@ -716,7 +765,7 @@
       "members": [
         {
           "type": "SYMBOL",
-          "name": "_annotationLabel"
+          "name": "annotationLabel"
         },
         {
           "type": "CHOICE",
@@ -2050,8 +2099,16 @@
             "name": "var"
           },
           {
-            "type": "SYMBOL",
-            "name": "_mem_ofs"
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "_mem_ofs"
+              },
+              {
+                "type": "BLANK"
+              }
+            ]
           },
           {
             "type": "STRING",
@@ -2202,7 +2259,7 @@
         ]
       }
     },
-    "_struct_annot": {
+    "struct_annot": {
       "type": "SEQ",
       "members": [
         {
@@ -2227,7 +2284,7 @@
         }
       ]
     },
-    "_implicities": {
+    "implicities": {
       "type": "SEQ",
       "members": [
         {
@@ -2243,7 +2300,7 @@
             },
             {
               "type": "SYMBOL",
-              "name": "_struct_annot"
+              "name": "struct_annot"
             },
             {
               "type": "STRING",
@@ -2364,14 +2421,14 @@
         },
         {
           "type": "SYMBOL",
-          "name": "_implicities"
+          "name": "implicities"
         },
         {
           "type": "SEQ",
           "members": [
             {
               "type": "SYMBOL",
-              "name": "_implicities"
+              "name": "implicities"
             },
             {
               "type": "STRING",
