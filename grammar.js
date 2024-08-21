@@ -66,7 +66,7 @@ module.exports = grammar({
 
     param: $ => seq(
       'param',
-      $._ptype,
+      $.ptype,
       $.identifier,
       '=',
       $.pexp,
@@ -74,7 +74,7 @@ module.exports = grammar({
     ),
 
     global: $ => seq(
-      $._ptype,
+      $.ptype,
       $.identifier,
       '=',
       $._pgexpr,
@@ -172,7 +172,7 @@ module.exports = grammar({
 
     _ptr: $ => $._pointer,
 
-    _storage: $ => choice(
+    storage: $ => choice(
       seq('reg', optional($._ptr)),
       seq('stack', optional($._ptr)),
       'inline',
@@ -186,15 +186,15 @@ module.exports = grammar({
 
     annotationLabel: $ => choice(
       $.identifier,
-      $._keyword,
+      $.keyword,
       $.string_literal,
     ),
 
     _simple_attribute: $ => choice(
       $.int,
       $.string_literal,
-      $._keyword,
-      $._utype,
+      $.keyword,
+      $.utype,
       $.identifier,
     ),
 
@@ -205,14 +205,14 @@ module.exports = grammar({
 
     annotation: $ => seq($.annotationLabel, optional($._attribute)),
 
-    _keyword: _ => token(choice(
+    keyword: _ => token(choice(
       'inline',
       'export',
       'reg',
       'stack',
     )),
 
-    _utype: _ => token(choice(
+    utype: _ => token(choice(
       'u8',
       'u16',
       'u32',
@@ -223,7 +223,7 @@ module.exports = grammar({
 
     _signletter: $ => choice('s', 'u'),
 
-    _swsize: _ => token(seq(
+    swsize: _ => token(seq(
         // $._size,
         choice(
           '8',
@@ -261,16 +261,16 @@ module.exports = grammar({
       )
     )),
 
-    _ptype: $ => choice(
+    ptype: $ => choice(
       'bool',
       'int',
-      $._utype,
-      seq($._utype, '[', $.pexp, ']'),
+      $.utype,
+      seq($.utype, '[', $.pexp, ']'),
     ),
 
     stor_type: $ => seq(
-      $._storage,
-      $._ptype,
+      $.storage,
+      $.ptype,
     ),
 
     _annot_stor_type: $ => seq(
@@ -305,7 +305,7 @@ module.exports = grammar({
     )),
 
     builtin_call: $ => prec.left(PREC.call, seq(
-      $._prim, '(', optional(commaSep($.pexp)), ')'
+      $.prim, '(', optional(commaSep($.pexp)), ')'
     )),
 
     pexp: $ => choice(
@@ -345,7 +345,7 @@ module.exports = grammar({
     )),
 
     castop: $ => choice(
-      $._swsize,
+      $.swsize,
       $._svsize,
     ),
 
@@ -376,9 +376,9 @@ module.exports = grammar({
       ));
     },
 
-    _cast: $ => choice('int', $._swsize),
+    _cast: $ => choice('int', $.swsize),
 
-    _prim: $ => seq('#', $.identifier),
+    prim: $ => seq('#', $.identifier),
 
     var: $ => $.identifier,
 
@@ -388,7 +388,7 @@ module.exports = grammar({
     ),
 
     _mem_access: $ => prec(PREC.subscript, seq(
-      optional(seq('(', $._utype, ')')),
+      optional(seq('(', $.utype, ')')),
       '[',
       optional($._unaligned),
       $.var,
@@ -421,7 +421,7 @@ module.exports = grammar({
 
     _arr_access_i: $ => seq(
       optional($._unaligned),
-      optional($._utype),
+      optional($.utype),
       $.pexp,
       optional($._arr_access_len),
     ),

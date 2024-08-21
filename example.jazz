@@ -29,6 +29,12 @@ fn add_minusp(stack u32[17] h) -> stack u32[17] {
   return h;
 }
 
+/*
+
+asd asd
+
+*/
+
 inline
 fn add_and_store(reg u64 out, stack u32[17] h, stack u32[17] c) {
   inline int j;
