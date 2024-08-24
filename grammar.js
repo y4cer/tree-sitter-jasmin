@@ -56,13 +56,22 @@ module.exports = grammar({
 
   rules: {
 
-    top: $ => repeat(choice(
+    top_r: $ => repeat($.top),
+
+    top: $ => choice(
       $.function_definition,
       $.param,
       $.global,
       $.require,
       $.exec,
-    )),
+      $.namespace,
+    ),
+
+    namespace: $ => seq(
+      "namespace",
+      $.identifier,
+      braces(repeat($.top)),
+    ),
 
     param: $ => seq(
       'param',

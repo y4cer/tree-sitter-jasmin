@@ -728,6 +728,25 @@
     }
   },
   {
+    "type": "namespace",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "top",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "param",
     "named": true,
     "fields": {},
@@ -1012,8 +1031,8 @@
     "named": true,
     "fields": {},
     "children": {
-      "multiple": true,
-      "required": false,
+      "multiple": false,
+      "required": true,
       "types": [
         {
           "type": "exec",
@@ -1025,6 +1044,10 @@
         },
         {
           "type": "global",
+          "named": true
+        },
+        {
+          "type": "namespace",
           "named": true
         },
         {
@@ -1052,6 +1075,21 @@
         },
         {
           "type": "struct_annot",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "top_r",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "top",
           "named": true
         }
       ]
@@ -1400,6 +1438,10 @@
   },
   {
     "type": "mut",
+    "named": false
+  },
+  {
+    "type": "namespace",
     "named": false
   },
   {

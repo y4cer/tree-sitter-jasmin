@@ -1,4 +1,3 @@
-
 [
  "fn"
  "return"
@@ -9,8 +8,15 @@
  "from"
  "while"
  "if"
+ "ArrayInit"
+ "namespace"
  (keyword)
 ] @keyword
+
+[
+ "true"
+ "false"
+] @constants.builtin
 
 (comment) @comment
 (var (identifier) @variable)

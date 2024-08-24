@@ -1,3 +1,7 @@
+namespace abobus {
+
+}
+
 inline
 fn add(stack u32[17] h, stack u32[17] c) -> stack u32[17] {
   inline int j;
