@@ -2,7 +2,8 @@
 
 ## Description
 
-This is a tree-sitter and highlights for the [Jasmin](https://github.com/jasmin-lang/jasmin) language
+This is a [tree-sitter](https://github.com/nvim-treesitter/nvim-treesitter) and
+highlights for the [Jasmin](https://github.com/jasmin-lang/jasmin) language
 
 ## Usage
 
@@ -25,6 +26,10 @@ vim.filetype.add {
   },
 }
 ```
+
+I haven't yet added the language support to the tree-sitter repository, so to
+use the highlights, you can add the `queries/highlights.scm` file to the NVIM
+runtime path to `queries/jasmin/highlights.scm`.
 
 ## License
 
