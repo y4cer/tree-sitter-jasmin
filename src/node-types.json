@@ -8,15 +8,11 @@
       "required": true,
       "types": [
         {
-          "type": "annotation",
-          "named": true
-        },
-        {
           "type": "pvardecl",
           "named": true
         },
         {
-          "type": "struct_annot",
+          "type": "top_annotation",
           "named": true
         }
       ]
@@ -599,10 +595,6 @@
         "required": false,
         "types": [
           {
-            "type": "#",
-            "named": false
-          },
-          {
             "type": "(",
             "named": false
           },
@@ -615,24 +607,12 @@
             "named": false
           },
           {
-            "type": "annotation",
-            "named": true
-          },
-          {
             "type": "stor_type",
             "named": true
           },
           {
-            "type": "struct_annot",
+            "type": "top_annotation",
             "named": true
-          },
-          {
-            "type": "{",
-            "named": false
-          },
-          {
-            "type": "}",
-            "named": false
           }
         ]
       },
@@ -709,15 +689,15 @@
       "required": true,
       "types": [
         {
-          "type": "annotation",
-          "named": true
-        },
-        {
           "type": "assignmentExpr",
           "named": true
         },
         {
           "type": "for_loop",
+          "named": true
+        },
+        {
+          "type": "function_call",
           "named": true
         },
         {
@@ -733,7 +713,7 @@
           "named": true
         },
         {
-          "type": "struct_annot",
+          "type": "top_annotation",
           "named": true
         },
         {
@@ -1053,6 +1033,25 @@
         },
         {
           "type": "require",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "top_annotation",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "annotation",
+          "named": true
+        },
+        {
+          "type": "struct_annot",
           "named": true
         }
       ]

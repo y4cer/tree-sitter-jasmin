@@ -528,7 +528,7 @@
           "type": "REPEAT",
           "content": {
             "type": "SYMBOL",
-            "name": "_top_annotation"
+            "name": "top_annotation"
           }
         },
         {
@@ -630,7 +630,7 @@
         }
       ]
     },
-    "_top_annotation": {
+    "top_annotation": {
       "type": "CHOICE",
       "members": [
         {
@@ -1041,7 +1041,7 @@
           "type": "REPEAT",
           "content": {
             "type": "SYMBOL",
-            "name": "_top_annotation"
+            "name": "top_annotation"
           }
         },
         {
@@ -2655,7 +2655,7 @@
           "type": "REPEAT",
           "content": {
             "type": "SYMBOL",
-            "name": "_top_annotation"
+            "name": "top_annotation"
           }
         },
         {
@@ -2710,53 +2710,7 @@
               "members": [
                 {
                   "type": "SYMBOL",
-                  "name": "var"
-                },
-                {
-                  "type": "SEQ",
-                  "members": [
-                    {
-                      "type": "STRING",
-                      "value": "("
-                    },
-                    {
-                      "type": "CHOICE",
-                      "members": [
-                        {
-                          "type": "SEQ",
-                          "members": [
-                            {
-                              "type": "SYMBOL",
-                              "name": "pexp"
-                            },
-                            {
-                              "type": "REPEAT",
-                              "content": {
-                                "type": "SEQ",
-                                "members": [
-                                  {
-                                    "type": "STRING",
-                                    "value": ","
-                                  },
-                                  {
-                                    "type": "SYMBOL",
-                                    "name": "pexp"
-                                  }
-                                ]
-                              }
-                            }
-                          ]
-                        },
-                        {
-                          "type": "BLANK"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "STRING",
-                      "value": ")"
-                    }
-                  ]
+                  "name": "function_call"
                 },
                 {
                   "type": "CHOICE",

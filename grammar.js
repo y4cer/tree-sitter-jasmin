@@ -156,7 +156,7 @@ module.exports = grammar({
     ),
 
     annot_pvardecl: $ => seq(
-      repeat($._top_annotation),
+      repeat($.top_annotation),
       $.pvardecl,
     ),
 
@@ -179,7 +179,7 @@ module.exports = grammar({
       'global',
     ),
 
-    _top_annotation: $ => choice(
+    top_annotation: $ => choice(
       seq('#', $.annotation),
       seq('#', braces($.struct_annot)),
     ),
@@ -274,7 +274,7 @@ module.exports = grammar({
     ),
 
     _annot_stor_type: $ => seq(
-      repeat($._top_annotation),
+      repeat($.top_annotation),
       tuple($.stor_type),
     ),
 
@@ -458,12 +458,12 @@ module.exports = grammar({
     )),
 
     instr: $ =>  seq(
-      repeat($._top_annotation),
+      repeat($.top_annotation),
       choice(
         seq('ArrayInit', '(', $.var, ')', terminator),
         seq($.assignmentExpr, terminator),
         seq(
-          $.var, parens(commaSep($.pexp)),
+          $.function_call,
           optional(
             seq('if', $.pexp,),
           ),
